@@ -11,6 +11,16 @@ angular.module('subzapp_mobile', ['ionic', 'starter.controllers', 'starter.servi
   });
 });
 
+angular.module('subzapp_mobile').filter('yesNo', function() {
+  return function(boolean) {
+    if (boolean) {
+      return 'Yes';
+    } else {
+      return 'No';
+    }
+  };
+});
+
 angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvider) {
   $stateProvider.state("login", {
     url: "/",

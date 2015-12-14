@@ -1,128 +1,136 @@
-<div class="container-fluid text-center">
-  <h1>Edit your details</h1>
+<ion-view view-title="Edit details" ng-controller="EditUserController">
+  <ion-content class="padding">
+    <div class="container-fluid text-center">
+      <h1>Edit your details</h1>
 
-  <div class="col-xs-2"></div>
-  <div class="col-xs-8">
-    <form class="form-horizontal" 
-            ng-submit="edit_user()" 
-            method="post" enctype="application/x-www-form-urlencoded"
-            name="update_user_form">
+      <div class="col-xs-2"></div>
+      <div class="col-xs-8">
+        <form class="form-horizontal" 
+                ng-submit="edit_user()" 
+                method="post" enctype="application/x-www-form-urlencoded"
+                name="update_user_form">
 
-      <div class="form-group">
-        <label class="col-sm-2">First name: </label>
-        <div class="col-sm-10">
-          <input type="text" name="firstName" ng-model="user.firstName" class="form-control" value="{{ name }}" placholder:'First name'>
-        </div> <!-- end of col-sm-10 -->
-      </div> <!-- end of form-group -->
+          <div class="form-group">
+            <label class="col-sm-2">First name: </label>
+            <div class="col-sm-10">
+              <input type="text" name="firstName" ng-model="user.firstName" class="form-control" value="{{ name }}" placholder:'First name'>
+            </div> <!-- end of col-sm-10 -->
+          </div> <!-- end of form-group -->
 
-      <div class="form-group">
-        <label class="col-sm-2">Last name: </label>
-        <div class="col-sm-10">
-          <input type="text" name="lastName" ng-model="user.lastName" class="form-control user_last_name"   placholder:'Last name'>
-        </div> <!-- end of col-sm-10 -->
-      </div> <!-- end of form-group -->
+          <div class="form-group">
+            <label class="col-sm-2">Last name: </label>
+            <div class="col-sm-10">
+              <input type="text" name="lastName" ng-model="user.lastName" class="form-control user_last_name"   placholder:'Last name'>
+            </div> <!-- end of col-sm-10 -->
+          </div> <!-- end of form-group -->
 
-      <div class="form-group">
-        <input type="submit" value="Update details" class="btn btn-default btn btn-success btn-lg">
+          <div class="form-group">
+            <input type="submit" value="Update details" class="btn btn-default btn btn-success btn-lg">
+            
+          </div> <!-- end of form-group text-center -->
+
+        </form>    
+
         
-      </div> <!-- end of form-group text-center -->
-
-    </form>    
-
-    
-    <p class="bg-primary">You have {{ user.tokens[0].amount }} tokens left. <br> Click the button below if you would like to add more</p>   
-    <div class="message">
-      {{ mes }}
-      
-    </div> <!-- end of message -->
-    </div> <!-- end of col.xs.12 -->
-    
-  </div>
-  <div class="col-xs-2"></div>
-</div> <!-- end of container-fluid -->
-
-
-
-
-<!-- Button trigger modal -->
-<div class="col-xs-12 text-center">
-  <button type="button" class="btn btn-primary btn-info text-center" data-toggle="modal" data-target="#myModal">
-    Purchase tokens
-  </button>
-</div>
-<!-- Modal -->
-<div class="container-fluid">
-  <div class="modal fade black_text" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="myModalLabel">Token purcahse</h4>
-        </div>
-        <div class="modal-body">
-         <form name="ccForm" ng-submit="stripe_submit()" name="token_form"
-              method="post" enctype="application/x-www-form-urlencoded">
-
-             <div class="form-group">
-               <label for="card-number">Card Number</label>
-
-               <input type="text" class="form-control" id="cardNumber" 
-                      ng-focus="card_highlight=true" ng-blur="card_highlight=false" 
-                      ng-class="{'valididation':card_highlight==true,'':card_highlight==false}" 
-                      cc-number name="ccNumber" ng-model="card.number">
-             </div>
-             
-             <div class="form-group">
-               <label for="cvc">CVC</label>
-               <input type="text" class="form-control" id="cvc" 
-                      cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" 
-                      ng-model="card.cvc"
-                      ng-focus="ccv_highlight=true" ng-blur="ccv_highlight=false" 
-                      ng-class="{'valididation':ccv_highlight==true,'':ccv_highlight==false}"
-                      >
-
-             </div>
-             
-             <div class="form-group">
-               <label for="card-number">Expiration</label>
-               <div class="row" cc-exp>
-                 <div class="col-xs-3">
-                   <input placeholder="MM" type="text" class="form-control" id="expiration_month"
-                          cc-exp-month name="ccExpMonth" ng-model="card.exp_month"
-                          ng-focus="month_highlight=true" ng-blur="month_highlight=false" 
-                          ng-class="{'valididation':month_highlight==true,'':month_highlight==false}"
-                          >
-                 </div>
-                 <div class="col-xs-3">
-                   <input placeholder="YY" type="text" class="form-control" id="expiration_year" 
-                         cc-exp-year name="ccExpYear" ng-model="card.exp_year"
-                         ng-focus="year_highlight=true" ng-blur="year_highlight=false" 
-                         ng-class="{'valididation':year_highlight==true,'':year_highlight==false}"
-                   >
-                 </div>
-               </div>
-             </div>
-
-             <div class="form-group">
-               <label for="inputPassword3" class="col-sm-2 control-label">Amount</label>
-               <div class="col-sm-10">
-                 <input type="number" name="amount" ng-model="card.amount"
-                      min="1" max="99" required>
-               </div>
-             </div>
-
-             <input type="image" alt="Submit Form" src="img/stripe.png" value="Pay up" ng-show="ccForm.ccNumber.$valid && ccForm.ccCvc.$valid && !ccForm.$error.ccExp && ccForm.ccExpYear.$valid && ccForm.ccExpMonth.$valid">
-           </form>
+        <p class="bg-primary">You have {{ user.tokens[0].amount }} tokens left. <br> Click the button below if you would like to add more</p>   
+        <div class="message">
+          {{ mes }}
           
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div> <!-- end of message -->
+        </div> <!-- end of col.xs.12 -->
         
       </div>
+      <div class="col-xs-2"></div>
+    </div> <!-- end of container-fluid -->
+
+    <!-- Button trigger modal -->
+    <div class="col-xs-12 text-center">
+      <button type="button" class="btn btn-primary btn-info text-center" data-toggle="modal" data-target="#myModal">
+        Purchase tokens
+      </button>
+    </div>
+    <!-- Modal -->
+    <div class="container-fluid token_container">
+      <div class="modal fade black_text" data-backdrop="false" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="myModalLabel">Token purcahse</h4>
+            </div>
+            <div class="modal-body">
+             <form name="ccForm" ng-submit="stripe_submit()" name="token_form"
+                  method="post" enctype="application/x-www-form-urlencoded">
+
+                 <div class="form-group">
+                   <label for="card-number">Card Number</label>
+
+                   <input type="text" class="form-control" id="cardNumber" 
+                          ng-focus="card_highlight=true" ng-blur="card_highlight=false" 
+                          ng-class="{'validation':card_highlight==true,'':card_highlight==false}" 
+                          cc-number name="ccNumber" ng-model="card.number">
+                 </div>
+                 
+                 <div class="form-group">
+                   <label for="cvc">CVC</label>
+                   <input type="text" class="form-control" id="cvc" 
+                          cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" 
+                          ng-model="card.cvc"
+                          ng-focus="ccv_highlight=true" ng-blur="ccv_highlight=false" 
+                          ng-class="{'validation':ccv_highlight==true,'':ccv_highlight==false}"
+                          >
+
+                 </div>
+                 
+                 <div class="form-group">
+                   <label for="card-number">Expiration</label>
+                   <div class="row" cc-exp>
+                     <div class="col-xs-3">
+                       <input placeholder="MM" type="text" class="form-control" id="expiration_month"
+                              cc-exp-month name="ccExpMonth" ng-model="card.exp_month"
+                              ng-focus="month_highlight=true" ng-blur="month_highlight=false" 
+                              ng-class="{'validation':month_highlight==true,'':month_highlight==false}"
+                              >
+                     </div>
+                     <div class="col-xs-3">
+                       <input placeholder="YY" type="text" class="form-control" id="expiration_year" 
+                             cc-exp-year name="ccExpYear" ng-model="card.exp_year"
+                             ng-focus="year_highlight=true" ng-blur="year_highlight=false" 
+                             ng-class="{'validation':year_highlight==true,'':year_highlight==false}"
+                       >
+                     </div>
+                   </div>
+                 </div>
+
+                 <div class="form-group">
+                   <label for="inputPassword3" class="col-sm-2 control-label">Amount</label>
+                   <div class="col-sm-10">
+                     <input type="number" name="amount" ng-model="card.amount"
+                          min="1" max="99" required>
+                   </div>
+                 </div>
+
+                 <input type="image" alt="Submit Form" src="img/stripe.png" value="Pay up" ng-show="ccForm.ccNumber.$valid && ccForm.ccCvc.$valid && !ccForm.$error.ccExp && ccForm.ccExpYear.$valid && ccForm.ccExpMonth.$valid">
+               </form>
+              
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            
+          </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
+  </ion-content>
+</ion-view>
+
+<!-- http://learn.ionicframework.com/formulas/making-modals/ -->
+
+
+   
+  
 
 <!-- http://embed.plnkr.co/uE47aZ/preview -->

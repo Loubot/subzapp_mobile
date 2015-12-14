@@ -62,7 +62,7 @@ left: -200px;
 /*end of user_page*/
 
 /* edit user page*/
-.valididation.ng-invalid{
+.validation.form-control:focus{
   border-color: red !important;
 }
 /* end of edit user page*/

@@ -16,8 +16,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
 
     user.get_user().then ( (res) ->
       # console.log "Got user #{ JSON.stringify res }"
+      console.log USER.tokens[0].amount
       $scope.is_member = check_if_member(USER, $location.search().id)
-      
+      $scope.user = USER
     ), ( err ) ->
       window.USER = null
       $state.go 'login'
@@ -31,9 +32,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
         params:
           team_id: $location.search().id
       ).then ( (res) ->
-        console.log res.data
+        # console.log res.data
         $scope.team = res.data
-        $scope.events = res.events
+        $scope.events = res.data.events
       ), ( errResponse ) ->
         console.log "Get team error #{ JSON.stringify errResponse }"
 
@@ -56,7 +57,8 @@ angular.module('subzapp_mobile').controller('TeamController', [
       ), ( errResponse ) ->
         console.log "Join team error #{ JSON.stringify errResponse }"
 
-  
+    $scope.edit_user = ->
+      $state.go 'edit-user'
         
 ])
 #return truthy if user is already a member of the team. This drives ng-hide="is_member" in the team.html view

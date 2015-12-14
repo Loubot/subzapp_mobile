@@ -27,6 +27,10 @@ angular.module('subzapp_mobile', [
   return
 )
 
+angular.module('subzapp_mobile').filter 'yesNo', ->
+  (boolean) ->
+    if boolean then 'Yes' else 'No'
+
 
 angular.module('subzapp_mobile').config ($stateProvider, $urlRouterProvider) ->
   # Ionic uses AngularUI Router which uses the concept of states

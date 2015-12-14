@@ -11,7 +11,8 @@ angular.module('subzapp_mobile').controller('EditUserController', [
   'stripe'
   ( $scope, $state, $http, $window, message, user, RESOURCES, stripe ) ->
     console.log 'EditUser Controller'
-    
+    console.log $('html').height()
+    $('.token_container').css 'height', '175'
     user_token = window.localStorage.getItem 'user_token'
     
     if !(window.USER?)
@@ -108,6 +109,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
     # stripeProvider.setPublishableKey('pk_test_bfa4lYmoaJZTm9d94qBTEEra')
 
     $scope.add_validation = (e) ->
+      console.log "he hey"
       t = e.target
       $(t).addClass('validation')
       console.log e

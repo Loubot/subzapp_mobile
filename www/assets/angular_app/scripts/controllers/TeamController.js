@@ -8,7 +8,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
     console.log("Team Controller");
     user_token = window.localStorage.getItem('user_token');
     user.get_user().then((function(res) {
-      return $scope.is_member = check_if_member(USER, $location.search().id);
+      console.log(USER.tokens[0].amount);
+      $scope.is_member = check_if_member(USER, $location.search().id);
+      return $scope.user = USER;
     }), function(err) {
       window.USER = null;
       return $state.go('login');
@@ -24,13 +26,12 @@ angular.module('subzapp_mobile').controller('TeamController', [
         team_id: $location.search().id
       }
     }).then((function(res) {
-      console.log(res.data);
       $scope.team = res.data;
-      return $scope.events = res.events;
+      return $scope.events = res.data.events;
     }), function(errResponse) {
       return console.log("Get team error " + (JSON.stringify(errResponse)));
     });
-    return $scope.join_team = function(id) {
+    $scope.join_team = function(id) {
       console.log("User " + USER.id);
       return $http({
         method: 'POST',
@@ -49,6 +50,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
       }), function(errResponse) {
         return console.log("Join team error " + (JSON.stringify(errResponse)));
       });
+    };
+    return $scope.edit_user = function() {
+      return $state.go('edit-user');
     };
   }
 ]);

@@ -4,6 +4,8 @@ angular.module('subzapp_mobile').controller('EditUserController', [
   '$scope', '$state', '$http', '$window', 'message', 'user', 'RESOURCES', 'stripe', function($scope, $state, $http, $window, message, user, RESOURCES, stripe) {
     var user_token;
     console.log('EditUser Controller');
+    console.log($('html').height());
+    $('.token_container').css('height', '175');
     user_token = window.localStorage.getItem('user_token');
     if (!(window.USER != null)) {
       user.get_user().then((function(res) {
@@ -80,6 +82,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
     };
     $scope.add_validation = function(e) {
       var t;
+      console.log("he hey");
       t = e.target;
       $(t).addClass('validation');
       console.log(e);

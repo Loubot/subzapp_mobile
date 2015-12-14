@@ -4,7 +4,7 @@
     <div class="container-fluid text-center" >
       <h2>{{ team.main_org.name }}</h2>
       <h4>{{ team.name }}</h4>
-      <p>
+      <p ng-hide="is_member">
         Join this team?
 
       </p>
@@ -20,12 +20,14 @@
     <div class="container-fluid">
       <div>
         <h4>Upcoming events</h4>
-        {{ events }}
+       
         <ul class="example-animate-container">
           <input type="search" ng-model="q" placeholder="filter clubs..." aria-label="filter friends" class="black_text" />
-          <br>Teams in {{ org.name }} To be done
+          <br>
           <li class="animate-repeat org_list" ng-repeat="event in events | filter:q as results">
-            <a href="/#/event?id={{ event.id }}" >[{{$index + 1}}] {{event}}.</a><br>
+            <a href="" >[{{$index + 1}}] {{ event.name }}, Time: {{ event.date | date: 'medium' }}. <br>
+              Price: {{ event.price }}
+            </a><br>
                  
           </li>
           <li class="animate-repeat" ng-if="orgs.length == 0">
@@ -36,5 +38,15 @@
     </div> <!-- end of container-fluid -->
 
   </ion-content>
+
+  <ion-footer-bar align-title="left" class="bar-assertive">
+    <div class="buttons">
+      <!-- <button class="button">Left Button</button> -->
+    </div>
+    <h1 class="title">{{ user.tokens[0].amount }} tokens left</h1>
+    <div class="buttons" ng-click="edit_user()">
+      <button class="button">Buy tokens</button>
+    </div>
+  </ion-footer-bar>
 </ion-view>
 
