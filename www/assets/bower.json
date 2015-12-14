@@ -1,0 +1,29 @@
+{
+  "name": "assets",
+  "homepage": "https://github.com/Loubot/subzapp_mobile",
+  "authors": [
+    "Louis <lllouis@yahoo.com>"
+  ],
+  "description": "ionic mobile app",
+  "main": "app.js",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "ionic"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-sanitize": "~1.4.8"
+  }
+}
