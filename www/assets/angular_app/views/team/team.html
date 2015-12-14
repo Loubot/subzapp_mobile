@@ -1,0 +1,40 @@
+<ion-view view-title="{{ team.name }}" ng-controller="TeamController">
+  <ion-content class="padding">
+    
+    <div class="container-fluid text-center" >
+      <h2>{{ team.main_org.name }}</h2>
+      <h4>{{ team.name }}</h4>
+      <p>
+        Join this team?
+
+      </p>
+      <a href="" class="btn btn-lg btn-success" ng-hide="is_member" ng-click="join_team(team.id)">Join {{ event.name }}!</a>
+
+      <div ng-show="is_member">
+        You are a member!
+      </div>
+      <br>
+      
+    </div>
+
+    <div class="container-fluid">
+      <div>
+        <h4>Upcoming events</h4>
+        {{ events }}
+        <ul class="example-animate-container">
+          <input type="search" ng-model="q" placeholder="filter clubs..." aria-label="filter friends" class="black_text" />
+          <br>Teams in {{ org.name }} To be done
+          <li class="animate-repeat org_list" ng-repeat="event in events | filter:q as results">
+            <a href="/#/event?id={{ event.id }}" >[{{$index + 1}}] {{event}}.</a><br>
+                 
+          </li>
+          <li class="animate-repeat" ng-if="orgs.length == 0">
+            <strong>No results found...</strong>
+          </li>
+        </ul>
+      </div>
+    </div> <!-- end of container-fluid -->
+
+  </ion-content>
+</ion-view>
+

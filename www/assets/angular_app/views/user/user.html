@@ -1,0 +1,19 @@
+<ion-view view-title="hellls bells">
+  <ion-content class="padding">
+
+    
+    <ul ng-show="orgs.length" class="example-animate-container">
+      <input type="search" ng-model="q" placeholder="filter clubs..." aria-label="filter friends" class="black_text" />
+      <br>Clubs on Subzapp
+      <li  class="animate-repeat org_list" ng-repeat="org in orgs | filter:q as results">
+        <a href="/#/org?id={{ org.id }}" >[{{$index + 1}}] {{org.name}}; Address: {{org.address}}.</a><br>
+             
+      </li>
+      <li class="animate-repeat" ng-if="orgs.length == 0">
+        <strong>No results found...</strong>
+      </li>
+    </ul>
+  </ion-content>
+</ion-view>
+
+

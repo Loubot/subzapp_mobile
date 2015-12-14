@@ -1,0 +1,19 @@
+
+<ion-view view-title="All orgs">
+  <ion-content>
+    <ul class="example-animate-container" ng-controller="AllOrgController">
+      <h2>All clubs on Subzapp</h2>
+      <input type="search" ng-model="q" placeholder="filter clubs..." aria-label="filter friends" class="black_text" />
+      
+      <li class="animate-repeat org_list" ng-repeat="org in orgs | filter:q as results">
+        <a href="/#/org?id={{ org.id }}" >[{{$index + 1}}] {{org.name}}.</a><br>
+             
+      </li>
+      <li class="animate-repeat" ng-if="orgs.length == 0">
+        <strong>No results found...</strong>
+      </li>
+    </ul>
+  </ion-content>
+</ion-view>
+
+
