@@ -17,7 +17,7 @@ angular.module('subzapp_mobile').controller('OrgController', [
     user.get_user().then ( (res) ->
       # console.log "Got user #{ JSON.stringify res }"
               
-      $scope.org = window.USER.org
+      # $scope.org = window.USER.org
       
     ), ( err ) ->
       window.USER = null

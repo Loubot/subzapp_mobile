@@ -116,8 +116,6 @@ angular.module('subzapp_mobile').service('user', function($http, $state, $rootSc
           $state.go('login');
           return false;
         } else {
-          console.log('here');
-          console.log(data);
           $rootScope.USER = data;
           return data;
         }

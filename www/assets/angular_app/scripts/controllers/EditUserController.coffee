@@ -9,18 +9,19 @@ angular.module('subzapp_mobile').controller('EditUserController', [
   'user'
   'RESOURCES'
   'stripe'
-  ( $scope, $state, $http, $window, message, user, RESOURCES, stripe ) ->
+  '$rootScope'
+  '$ionicModal'
+  ( $scope, $state, $http, $window, message, user, RESOURCES, stripe, $rootScope, $ionicModal ) ->
     console.log 'EditUser Controller'
-    console.log $('html').height()
-    $('.token_container').css 'height', '175'
+    
     user_token = window.localStorage.getItem 'user_token'
     
     if !(window.USER?)
       user.get_user().then ( (res) ->
         # console.log res
                 
-        $scope.orgs = window.USER.orgs
-        $scope.user = USER
+        # $scope.orgs = window.USER.orgs
+        $scope.user = $rootScope.USER
       ), ( errResponse ) ->
         console.log "User get error #{ JSON.stringify errResponse }"
         window.USER = null
@@ -117,6 +118,22 @@ angular.module('subzapp_mobile').controller('EditUserController', [
 
 
     $('#myModal').modal 'show'
+
+
+    $scope.openModal = ->
+      $ionicModal.fromTemplateUrl('assets/angular_app/views/modals/payment-form.html',
+        scope: $scope
+        animation: 'slide-in-up').then (modal) ->
+        $scope.modal = modal
+        return
+
+      $scope.openModal = ->
+        console.log 'hererer'
+        $scope.modal.show()
+
+      $scope.closeModal = ->
+        $scope.modal.hide()
+        
 
 
 ])

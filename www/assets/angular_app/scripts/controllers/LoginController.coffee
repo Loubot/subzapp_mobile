@@ -7,11 +7,13 @@ angular.module('subzapp_mobile').controller('LoginController', [
   '$window'
   'message'
   'RESOURCES'
-  # 'AuthService'
-  ( $scope, $state, $http, $window, message, RESOURCES ) ->
+  '$rootScope'
+  
+  ( $scope, $state, $http, $window, message, RESOURCES, $rootScope ) ->
     console.log 'Login Controller'
     
     $scope.user = {}
+    $rootScope.USER = null
     
     $scope.login_submit = ->
       console.log "loginsss #{ JSON.stringify $scope.login_form_data }"

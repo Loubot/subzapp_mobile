@@ -7,10 +7,12 @@ angular.module('subzapp_mobile').controller('RegisterController', [
   '$window'
   'message'
   'RESOURCES'
+  '$rootScope'
 
-  ($scope, $state, $http, $window, message, RESOURCES ) ->
+  ($scope, $state, $http, $window, message, RESOURCES, $rootScope ) ->
 
     console.log "Register Controller"
+    $rootScope.USER = null
 
     $scope.register_submit = ->
       

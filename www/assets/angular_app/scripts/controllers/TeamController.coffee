@@ -9,16 +9,19 @@ angular.module('subzapp_mobile').controller('TeamController', [
   'message'
   'user'
   'RESOURCES'
+  '$rootScope'
 
-  ($scope, $state, $http, $window, $location, message, user, RESOURCES ) ->
+  ($scope, $state, $http, $window, $location, message, user, RESOURCES, $rootScope ) ->
     console.log "Team Controller"
-    user_token = window.localStorage.getItem 'user_token'
+    user_token = window.localStorage.getItem 'user_token'    
 
     user.get_user().then ( (res) ->
+      user = $rootScope.USER
+      console.log user
       # console.log "Got user #{ JSON.stringify res }"
-      console.log USER.tokens[0].amount
-      $scope.is_member = check_if_member(USER, $location.search().id)
-      $scope.user = USER
+      # console.log USER.tokens[0].amount
+      $scope.is_member = check_if_member(user, $location.search().id)
+      $scope.user = user
     ), ( err ) ->
       window.USER = null
       $state.go 'login'

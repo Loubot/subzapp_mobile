@@ -160,8 +160,8 @@ angular.module('subzapp_mobile').factory 'message', ->
           
           return false
         else
-          console.log 'here'
-          console.log data
+          # console.log 'here'
+          # console.log data
           $rootScope.USER = data
           return data
         

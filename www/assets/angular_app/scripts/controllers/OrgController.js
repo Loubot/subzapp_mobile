@@ -5,9 +5,7 @@ angular.module('subzapp_mobile').controller('OrgController', [
     var user_token;
     user_token = window.localStorage.getItem('user_token');
     console.log("Org Controller");
-    user.get_user().then((function(res) {
-      return $scope.org = window.USER.org;
-    }), function(err) {
+    user.get_user().then((function(res) {}), function(err) {
       window.USER = null;
       return $state.go('login');
     });

@@ -3,14 +3,15 @@
 var check_if_member, check_if_member_after_create;
 
 angular.module('subzapp_mobile').controller('TeamController', [
-  '$scope', '$state', '$http', '$window', '$location', 'message', 'user', 'RESOURCES', function($scope, $state, $http, $window, $location, message, user, RESOURCES) {
+  '$scope', '$state', '$http', '$window', '$location', 'message', 'user', 'RESOURCES', '$rootScope', function($scope, $state, $http, $window, $location, message, user, RESOURCES, $rootScope) {
     var user_token;
     console.log("Team Controller");
     user_token = window.localStorage.getItem('user_token');
     user.get_user().then((function(res) {
-      console.log(USER.tokens[0].amount);
-      $scope.is_member = check_if_member(USER, $location.search().id);
-      return $scope.user = USER;
+      user = $rootScope.USER;
+      console.log(user);
+      $scope.is_member = check_if_member(user, $location.search().id);
+      return $scope.user = user;
     }), function(err) {
       window.USER = null;
       return $state.go('login');
