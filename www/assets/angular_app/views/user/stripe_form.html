@@ -1,0 +1,83 @@
+<ion-view view-title="Edit details" ng-controller="EditUserController">
+  <ion-content class="padding">
+    <div class="well">
+       <form name="ccForm" ng-submit="stripe_submit()" name="token_form" class="black_text" ng-controller="EditUserController"
+             method="post" enctype="application/x-www-form-urlencoded">
+
+         <div class="list">
+           <label class="item item-input item-stacked-label">
+             <span class="input-label">Card Number</span>
+             <input type="text" class="form-control" id="cardNumber" 
+                 ng-focus="card_highlight=true" ng-blur="card_highlight=false" 
+                 ng-class="{'validation':card_highlight==true,'':card_highlight==false}" 
+                 cc-number cc-type="cardType" name="ccNumber" ng-model="card.number">
+           </label>
+           <label class="item item-input item-stacked-label">
+             <span class="input-label">CVC</span>
+             <input type="text" class="form-control" id="cvc" 
+                 cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" 
+                 ng-model="card.cvc"
+                 ng-focus="ccv_highlight=true" ng-blur="ccv_highlight=false" 
+                 ng-class="{'validation':ccv_highlight==true,'':ccv_highlight==false}"
+                 >
+           </label>
+           <div class="row exp_date">
+             <label class="item item-input item-stacked-label col-50">
+               
+               <input placeholder="MM" type="text" class="form-control" id="expiration_month"
+                       cc-exp-month name="ccExpMonth" ng-model="card.exp_month"
+                       ng-focus="month_highlight=true" ng-blur="month_highlight=false" 
+                       ng-class="{'validation':month_highlight==true,'':month_highlight==false}"
+                       >
+             </label>
+             <label class="item item-input item-stacked-label col-50">
+               
+               <input placeholder="YY" type="text" class="form-control" id="expiration_year" 
+                      cc-exp-year name="ccExpYear" ng-model="card.exp_year"
+                      ng-focus="year_highlight=true" ng-blur="year_highlight=false" 
+                      ng-class="{'validation':year_highlight==true,'':year_highlight==false}">
+             </label>
+           </div> <!-- end of row -->
+
+           <label class="item item-input item-stacked-label">
+             <span class="input-label">Amount</span>
+             <input type="number" name="amount" ng-model="card.amount"
+                 min="1" max="99" required>
+           </label>
+         </div> <!-- end of list -->
+
+        
+         <p class="valid_yes" ng-show="ccForm.ccNumber.$valid">hello</p>
+        <input type="image" alt="Submit Form" src="img/stripe.png" value="Pay up" ng-show="ccForm.ccNumber.$valid && ccForm.ccCvc.$valid && !ccForm.$error.ccExp && ccForm.ccExpYear.$valid && ccForm.ccExpMonth.$valid">
+        <table class="table">
+          <tr>
+            <th>Valid Month</th>
+            <th>Valid Year</th>
+            <th>Valid Pair</th>
+          </tr>
+          <tr>
+            <td>
+              {{ccForm.ccExpMonth.$valid | yesNo}}
+            </td>
+            <td>
+              {{ccForm.ccExpYear.$valid | yesNo}}
+            </td>
+            <td>
+              {{!ccForm.$error.ccExp | yesNo}}
+            </td>
+          </tr>
+        </table>
+      </form>
+
+    </div>
+    
+
+  </ion-content>
+</ion-view>
+
+<!-- http://learn.ionicframework.com/formulas/making-modals/ -->
+
+   
+  
+
+<!-- http://embed.plnkr.co/uE47aZ/preview -->

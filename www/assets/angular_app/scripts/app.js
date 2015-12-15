@@ -38,6 +38,10 @@ angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvi
     url: "/edit-user",
     templateUrl: 'assets/angular_app/views/user/edit_user.html'
   });
+  $stateProvider.state("stripe-form", {
+    url: "/stripe-form",
+    templateUrl: 'assets/angular_app/views/user/stripe_form.html'
+  });
   $stateProvider.state("org", {
     url: "/org",
     templateUrl: 'assets/angular_app/views/org/org.html'

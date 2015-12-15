@@ -2,23 +2,28 @@
 'use strict';
 angular.module('subzapp_mobile').controller('EditUserController', [
   '$scope', '$state', '$http', '$window', 'message', 'user', 'RESOURCES', 'stripe', '$rootScope', '$ionicModal', function($scope, $state, $http, $window, message, user, RESOURCES, stripe, $rootScope, $ionicModal) {
-    var user_token;
+    var USER, user_token;
     console.log('EditUser Controller');
     user_token = window.localStorage.getItem('user_token');
     if (!(window.USER != null)) {
       user.get_user().then((function(res) {
-        return $scope.user = $rootScope.USER;
+        var USER;
+        USER = $rootScope.USER;
+        return $scope.tokens = USER.tokens[0].amount;
       }), function(errResponse) {
         console.log("User get error " + (JSON.stringify(errResponse)));
-        window.USER = null;
+        $rootScope.USER = null;
         return $state.go('login');
       });
     } else {
       console.log('else');
-      $scope.orgs = window.USER.orgs;
+      USER = $rootScope.USER;
+      $scope.orgs = USER.orgs;
       $scope.user = USER;
+      $scope.tokens = USER.tokens[0].amount;
     }
     $scope.edit_user = function() {
+      console.log($scope.user_data);
       return $http({
         method: 'POST',
         url: RESOURCES.DOMAIN + "/edit-user",
@@ -27,9 +32,9 @@ angular.module('subzapp_mobile').controller('EditUserController', [
           "Content-Type": "application/json"
         },
         data: {
-          id: $scope.user.id,
-          firstName: $scope.user.firstName,
-          lastName: $scope.user.lastName
+          id: $scope.user_data.id,
+          firstName: $scope.user_data.firstName,
+          lastName: $scope.user_data.lastName
         }
       }).then((function(response) {
         console.log("Edit user response " + (JSON.stringify(response)));
@@ -62,11 +67,13 @@ angular.module('subzapp_mobile').controller('EditUserController', [
           data: {
             stripe_token: token.id,
             amount: amount,
-            user_id: USER.id
+            user_id: $rootScope.USER.id
           }
         }).then((function(res) {
-          console.log(res);
-          return message.success(res.data.message);
+          console.log("res " + (JSON.stringify(res.data.token.amount)));
+          message.success(res.data.message);
+          $scope.tokens = 'hello';
+          return $scope.modal.hide();
         }), function(errResponse) {
           console.log("Create payment error " + (JSON.stringify(errResponse)));
           console.log(errResponse);
@@ -85,7 +92,6 @@ angular.module('subzapp_mobile').controller('EditUserController', [
       console.log(e);
       return true;
     };
-    $('#myModal').modal('show');
     return $scope.openModal = function() {
       $ionicModal.fromTemplateUrl('assets/angular_app/views/modals/payment-form.html', {
         scope: $scope,
@@ -98,8 +104,14 @@ angular.module('subzapp_mobile').controller('EditUserController', [
         return $scope.modal.show();
       };
       return $scope.closeModal = function() {
-        return $scope.modal.hide();
+        $scope.modal.hide();
+        return $scope.modal.remove();
       };
     };
   }
 ]);
+
+$(document).on('focus', '#cardNumber', function(e) {
+  console.log(e);
+  return $(this).css('border-color', 'red !important');
+});

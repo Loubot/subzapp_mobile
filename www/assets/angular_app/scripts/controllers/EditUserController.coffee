@@ -20,29 +20,31 @@ angular.module('subzapp_mobile').controller('EditUserController', [
       user.get_user().then ( (res) ->
         # console.log res
                 
-        # $scope.orgs = window.USER.orgs
-        $scope.user = $rootScope.USER
+        USER = $rootScope.USER
+        $scope.tokens = USER.tokens[0].amount
       ), ( errResponse ) ->
         console.log "User get error #{ JSON.stringify errResponse }"
-        window.USER = null
+        $rootScope.USER = null
         $state.go 'login'
     else 
       console.log 'else'
-      $scope.orgs = window.USER.orgs
+      USER = $rootScope.USER
+      $scope.orgs = USER.orgs
       $scope.user = USER
+      $scope.tokens = USER.tokens[0].amount
 
     
     $scope.edit_user = ->
-      # console.log $scope.user
-      # $scope.user.user_id = USER.id
+      console.log $scope.user_data
+      
       $http(
         method: 'POST'
         url: "#{ RESOURCES.DOMAIN }/edit-user"
         headers: { 'Authorization': "JWT #{ user_token }", "Content-Type": "application/json" }
         data: 
-          id: $scope.user.id
-          firstName: $scope.user.firstName
-          lastName: $scope.user.lastName
+          id: $scope.user_data.id
+          firstName: $scope.user_data.firstName
+          lastName: $scope.user_data.lastName
       ).then ( (response) ->
         console.log "Edit user response #{ JSON.stringify response }"
         message.success('User updated ok')
@@ -81,11 +83,13 @@ angular.module('subzapp_mobile').controller('EditUserController', [
           data:
             stripe_token: token.id
             amount: amount
-            user_id: USER.id
+            user_id: $rootScope.USER.id
         ).then ( ( res ) ->
-          # console.log "res #{ JSON.stringify res }"
-          console.log res
+          console.log "res #{ JSON.stringify res.data.token.amount }"
+          # console.log res
           message.success res.data.message
+          $scope.tokens = 'hello'
+          $scope.modal.hide()
         ), ( errResponse ) ->
           console.log "Create payment error #{ JSON.stringify errResponse }"
           console.log errResponse
@@ -117,9 +121,6 @@ angular.module('subzapp_mobile').controller('EditUserController', [
       return true
 
 
-    $('#myModal').modal 'show'
-
-
     $scope.openModal = ->
       $ionicModal.fromTemplateUrl('assets/angular_app/views/modals/payment-form.html',
         scope: $scope
@@ -133,7 +134,12 @@ angular.module('subzapp_mobile').controller('EditUserController', [
 
       $scope.closeModal = ->
         $scope.modal.hide()
+        $scope.modal.remove()
         
 
 
 ])
+
+$(document).on 'focus', '#cardNumber', (e) ->
+  console.log e
+  $(@).css 'border-color', 'red !important'

@@ -140,3 +140,14 @@ left: -200px;
 .do_it{
   margin-bottom: 50px;
 }
+
+/*payment-form*/
+.exp_date{
+  margin: 0 auto;
+}
+
+.valid_yes{
+  background-color: #006200;
+  color: #FFF;
+}
+/*end of payment form*/
