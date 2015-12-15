@@ -47,7 +47,30 @@
          </div> <!-- end of list -->
 
         
-         <p class="valid_yes" ng-show="ccForm.ccNumber.$valid">hello</p>
+         <table class="table">
+          <tr>
+            <th>Valid</th>
+            <th>Type</th>
+          </tr>
+          <tr>
+            <td>
+              {{ccForm.ccNumber.$valid | yesNo}}
+            </td>
+            <td>
+              {{ccForm.ccNumber.$ccType || 'Unknown'}}
+            </td>
+          </tr>
+        </table>
+        <table class="table">
+          <tr>
+            <th>Valid</th>
+          </tr>
+          <tr>
+            <td>
+              {{ccForm.ccCvc.$valid | yesNo}}
+            </td>
+          </tr>
+        </table>
         <input type="image" alt="Submit Form" src="img/stripe.png" value="Pay up" ng-show="ccForm.ccNumber.$valid && ccForm.ccCvc.$valid && !ccForm.$error.ccExp && ccForm.ccExpYear.$valid && ccForm.ccExpMonth.$valid">
         <table class="table">
           <tr>

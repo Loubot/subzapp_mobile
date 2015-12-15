@@ -54,6 +54,7 @@ angular.module('subzapp_mobile').config ($stateProvider, $urlRouterProvider) ->
     # controller: "UserController"
 
   $stateProvider.state "edit-user",
+    cache: false
     url: "/edit-user"
     templateUrl : 'assets/angular_app/views/user/edit_user.html'
     # controller: "EditUserController"
@@ -129,7 +130,7 @@ angular.module('subzapp_mobile').factory 'message', ->
     $('.message').show 'slide', { direction: 'right' }, 1000
     setTimeout ( ->
       $('.message').hide 'slide', { direction: 'left' }, 1000
-    ), 5000
+    ), 10000
     
   success: ( mes ) ->
     $('.message').removeClass 'error_message'
@@ -138,7 +139,7 @@ angular.module('subzapp_mobile').factory 'message', ->
     $('.message').show 'slide', { direction: 'right' }, 1000
     setTimeout ( ->
       $('.message').hide 'slide', { direction: 'left' }, 1000
-    ), 5000
+    ), 10000
 
     
  angular.module('subzapp_mobile').service 'user', ($http, $state, $rootScope, RESOURCES ) ->

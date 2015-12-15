@@ -9,6 +9,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
       user.get_user().then((function(res) {
         var USER;
         USER = $rootScope.USER;
+        console.log(USER.tokens[0].amount);
         return $scope.tokens = USER.tokens[0].amount;
       }), function(errResponse) {
         console.log("User get error " + (JSON.stringify(errResponse)));
@@ -23,7 +24,6 @@ angular.module('subzapp_mobile').controller('EditUserController', [
       $scope.tokens = USER.tokens[0].amount;
     }
     $scope.edit_user = function() {
-      console.log($scope.user_data);
       return $http({
         method: 'POST',
         url: RESOURCES.DOMAIN + "/edit-user",
@@ -48,15 +48,9 @@ angular.module('subzapp_mobile').controller('EditUserController', [
     /* Stripe payments */
     $scope.stripe_submit = function() {
       var amount, stripe_response;
-      console.log('stripe');
-      console.log($scope.card);
       amount = $scope.card.amount;
       delete $scope.card.amount;
-      console.log("amount " + amount + " ");
       stripe_response = function(status, token) {
-        console.log(status);
-        console.log(token);
-        console.log("amount " + amount);
         return $http({
           method: 'POST',
           url: RESOURCES.DOMAIN + "/create-payment",
@@ -72,8 +66,8 @@ angular.module('subzapp_mobile').controller('EditUserController', [
         }).then((function(res) {
           console.log("res " + (JSON.stringify(res.data.token.amount)));
           message.success(res.data.message);
-          $scope.tokens = 'hello';
-          return $scope.modal.hide();
+          $scope.tokens = res.data.token.amount;
+          return $state.go("edit-user");
         }), function(errResponse) {
           console.log("Create payment error " + (JSON.stringify(errResponse)));
           console.log(errResponse);
@@ -81,32 +75,15 @@ angular.module('subzapp_mobile').controller('EditUserController', [
         });
       };
       stripe.setPublishableKey('pk_test_bfa4lYmoaJZTm9d94qBTEEra');
-      stripe.card.createToken($scope.card, stripe_response);
-      return console.log(stripe);
+      return stripe.card.createToken($scope.card, stripe_response);
     };
-    $scope.add_validation = function(e) {
+    return $scope.add_validation = function(e) {
       var t;
       console.log("he hey");
       t = e.target;
       $(t).addClass('validation');
       console.log(e);
       return true;
-    };
-    return $scope.openModal = function() {
-      $ionicModal.fromTemplateUrl('assets/angular_app/views/modals/payment-form.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      }).then(function(modal) {
-        $scope.modal = modal;
-      });
-      $scope.openModal = function() {
-        console.log('hererer');
-        return $scope.modal.show();
-      };
-      return $scope.closeModal = function() {
-        $scope.modal.hide();
-        return $scope.modal.remove();
-      };
     };
   }
 ]);

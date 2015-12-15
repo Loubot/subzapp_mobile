@@ -21,6 +21,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
         # console.log res
                 
         USER = $rootScope.USER
+        console.log USER.tokens[0].amount
         $scope.tokens = USER.tokens[0].amount
       ), ( errResponse ) ->
         console.log "User get error #{ JSON.stringify errResponse }"
@@ -35,7 +36,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
 
     
     $scope.edit_user = ->
-      console.log $scope.user_data
+      # console.log $scope.user_data
       
       $http(
         method: 'POST'
@@ -62,19 +63,19 @@ angular.module('subzapp_mobile').controller('EditUserController', [
     #   exp_year: 17
 
     $scope.stripe_submit = ->
-      console.log 'stripe'
-      console.log $scope.card
+      # console.log 'stripe'
+      # console.log $scope.card
 
       amount = $scope.card.amount
 
       delete $scope.card.amount
-      console.log "amount #{ amount } "
+      # console.log "amount #{ amount } "
       
 
       stripe_response = (status, token) ->
-        console.log status
-        console.log token
-        console.log "amount #{ amount }"
+        # console.log status
+        # console.log token
+        # console.log "amount #{ amount }"
 
         $http(
           method: 'POST'
@@ -88,8 +89,9 @@ angular.module('subzapp_mobile').controller('EditUserController', [
           console.log "res #{ JSON.stringify res.data.token.amount }"
           # console.log res
           message.success res.data.message
-          $scope.tokens = 'hello'
-          $scope.modal.hide()
+          $scope.tokens = res.data.token.amount
+          $state.go "edit-user"
+          
         ), ( errResponse ) ->
           console.log "Create payment error #{ JSON.stringify errResponse }"
           console.log errResponse
@@ -110,7 +112,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
       
       stripe.setPublishableKey('pk_test_bfa4lYmoaJZTm9d94qBTEEra')
       stripe.card.createToken $scope.card, stripe_response
-      console.log stripe
+      # console.log stripe
     # stripeProvider.setPublishableKey('pk_test_bfa4lYmoaJZTm9d94qBTEEra')
 
     $scope.add_validation = (e) ->
@@ -119,24 +121,6 @@ angular.module('subzapp_mobile').controller('EditUserController', [
       $(t).addClass('validation')
       console.log e
       return true
-
-
-    $scope.openModal = ->
-      $ionicModal.fromTemplateUrl('assets/angular_app/views/modals/payment-form.html',
-        scope: $scope
-        animation: 'slide-in-up').then (modal) ->
-        $scope.modal = modal
-        return
-
-      $scope.openModal = ->
-        console.log 'hererer'
-        $scope.modal.show()
-
-      $scope.closeModal = ->
-        $scope.modal.hide()
-        $scope.modal.remove()
-        
-
 
 ])
 

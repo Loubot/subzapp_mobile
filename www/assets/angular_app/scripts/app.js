@@ -35,6 +35,7 @@ angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvi
     templateUrl: 'assets/angular_app/views/user/user.html'
   });
   $stateProvider.state("edit-user", {
+    cache: false,
     url: "/edit-user",
     templateUrl: 'assets/angular_app/views/user/edit_user.html'
   });
@@ -82,7 +83,7 @@ angular.module('subzapp_mobile').factory('message', function() {
         return $('.message').hide('slide', {
           direction: 'left'
         }, 1000);
-      }), 5000);
+      }), 10000);
     },
     success: function(mes) {
       $('.message').removeClass('error_message');
@@ -95,7 +96,7 @@ angular.module('subzapp_mobile').factory('message', function() {
         return $('.message').hide('slide', {
           direction: 'left'
         }, 1000);
-      }), 5000);
+      }), 10000);
     }
   };
 });
