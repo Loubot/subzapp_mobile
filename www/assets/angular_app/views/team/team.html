@@ -1,9 +1,12 @@
-<ion-view view-title="{{ team.name }}" ng-controller="TeamController">
-  <ion-content class="padding">
+<ion-view cache-view="false" ng-controller="TeamController">
+  <ion-nav-title>
+      {{ team.name }}
+  </ion-nav-title>
+  <ion-content class="padding do_it">
     
     <div class="container-fluid text-center" >
-      <h2>{{ team.main_org.name }}</h2>
-      <h4>{{ team.name }}</h4>
+      <h2 class="white_text">{{ team.main_org.name }}</h2>
+      <h4 class="white_text">{{ team.name }}</h4>
       <p ng-hide="is_member">
         Join this team?
 
@@ -36,17 +39,7 @@
         </ul>
       </div>
     </div> <!-- end of container-fluid -->
-
+    
   </ion-content>
-
-  <ion-footer-bar align-title="left" class="bar-assertive">
-    <div class="buttons">
-      <!-- <button class="button">Left Button</button> -->
-    </div>
-    <h1 class="title">{{ user.tokens[0].amount }} tokens left</h1>
-    <div class="buttons" ng-click="edit_user()">
-      <button class="button">Buy tokens</button>
-    </div>
-  </ion-footer-bar>
 </ion-view>
 

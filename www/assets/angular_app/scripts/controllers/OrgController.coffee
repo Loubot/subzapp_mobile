@@ -25,7 +25,7 @@ angular.module('subzapp_mobile').controller('OrgController', [
 
 
 
-    console.log "params " + JSON.stringify $location.search().id
+    # console.log "params " + JSON.stringify $location.search().id
     
     $http(
       method: 'GET'

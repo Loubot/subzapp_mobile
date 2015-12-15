@@ -2,7 +2,7 @@
 <ion-view view-title="All orgs">
   <ion-content>
     <ul class="example-animate-container" ng-controller="AllOrgController">
-      <h2>All clubs on Subzapp</h2>
+      <h2 class="white_text">All clubs on Subzapp</h2>
       <input type="search" ng-model="q" placeholder="filter clubs..." aria-label="filter friends" class="black_text" />
       
       <li class="animate-repeat org_list" ng-repeat="org in orgs | filter:q as results">

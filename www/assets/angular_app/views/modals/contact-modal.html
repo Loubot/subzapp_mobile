@@ -1,0 +1,64 @@
+<div class="modal">
+  <ion-header-bar>
+    <h1 class="title">Buy tokens</h1>
+  </ion-header-bar>
+  <ion-content>
+    
+     <form name="ccForm" ng-submit="stripe_submit()" name="token_form" class="black_text"
+          method="post" enctype="application/x-www-form-urlencoded">
+
+         <div class="form-group">
+           <label for="card-number">Card Number</label>
+
+           <input type="text" class="form-control" id="cardNumber" 
+                  ng-focus="card_highlight=true" ng-blur="card_highlight=false" 
+                  ng-class="{'validation':card_highlight==true,'':card_highlight==false}" 
+                  cc-number name="ccNumber" ng-model="card.number">
+         </div>
+         
+         <div class="form-group">
+           <label for="cvc">CVC</label>
+           <input type="text" class="form-control" id="cvc" 
+                  cc-cvc cc-type="ccForm.ccNumber.$ccType" name="ccCvc" 
+                  ng-model="card.cvc"
+                  ng-focus="ccv_highlight=true" ng-blur="ccv_highlight=false" 
+                  ng-class="{'validation':ccv_highlight==true,'':ccv_highlight==false}"
+                  >
+
+         </div>
+         
+         <div class="form-group">
+           <label for="card-number">Expiration</label>
+           <div class="row" cc-exp>
+             <div class="col-xs-3">
+               <input placeholder="MM" type="text" class="form-control" id="expiration_month"
+                      cc-exp-month name="ccExpMonth" ng-model="card.exp_month"
+                      ng-focus="month_highlight=true" ng-blur="month_highlight=false" 
+                      ng-class="{'validation':month_highlight==true,'':month_highlight==false}"
+                      >
+             </div>
+             <div class="col-xs-3">
+               <input placeholder="YY" type="text" class="form-control" id="expiration_year" 
+                     cc-exp-year name="ccExpYear" ng-model="card.exp_year"
+                     ng-focus="year_highlight=true" ng-blur="year_highlight=false" 
+                     ng-class="{'validation':year_highlight==true,'':year_highlight==false}"
+               >
+             </div>
+           </div>
+         </div>
+
+         <div class="form-group">
+           <label for="inputPassword3" class="col-sm-2 control-label">Amount</label>
+           <div class="col-sm-10">
+             <input type="number" name="amount" ng-model="card.amount"
+                  min="1" max="99" required>
+           </div>
+         </div>
+
+         <input type="image" alt="Submit Form" src="img/stripe.png" value="Pay up" ng-show="ccForm.ccNumber.$valid && ccForm.ccCvc.$valid && !ccForm.$error.ccExp && ccForm.ccExpYear.$valid && ccForm.ccExpMonth.$valid">
+       </form>
+           
+
+    <button class="button button-full button-energized" ng-click="closeModal()">Done</button>
+  </ion-content>
+</div>

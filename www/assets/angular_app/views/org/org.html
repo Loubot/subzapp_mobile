@@ -1,5 +1,7 @@
-
-<ion-view view-title="{{ org.name }}" ng-controller="OrgController">
+<ion-view ng-controller="OrgController">
+  <ion-nav-title>
+      {{ org.name }}
+  </ion-nav-title>
   <ion-content>
     <ul class="example-animate-container" >
       <input type="search" ng-model="q" placeholder="filter clubs..." aria-label="filter friends" class="black_text" />
@@ -14,6 +16,3 @@
     </ul>
   </ion-content>
 </ion-view>
-
-
-

@@ -11,7 +11,6 @@ angular.module('subzapp_mobile').controller('OrgController', [
       window.USER = null;
       return $state.go('login');
     });
-    console.log("params " + JSON.stringify($location.search().id));
     return $http({
       method: 'GET',
       url: RESOURCES.DOMAIN + "/get-single-org",

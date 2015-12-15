@@ -137,7 +137,7 @@ angular.module('subzapp_mobile').factory 'message', ->
     ), 5000
 
     
- angular.module('subzapp_mobile').service 'user', ($http, $state, RESOURCES ) ->
+ angular.module('subzapp_mobile').service 'user', ($http, $state, $rootScope, RESOURCES ) ->
   console.log "user service"
   {
     get_user: ->
@@ -160,7 +160,9 @@ angular.module('subzapp_mobile').factory 'message', ->
           
           return false
         else
-          window.USER = data
+          console.log 'here'
+          console.log data
+          $rootScope.USER = data
           return data
         
       ).error (err) ->

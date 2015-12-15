@@ -96,7 +96,7 @@ angular.module('subzapp_mobile').factory('message', function() {
   };
 });
 
-angular.module('subzapp_mobile').service('user', function($http, $state, RESOURCES) {
+angular.module('subzapp_mobile').service('user', function($http, $state, $rootScope, RESOURCES) {
   console.log("user service");
   return {
     get_user: function() {
@@ -116,7 +116,9 @@ angular.module('subzapp_mobile').service('user', function($http, $state, RESOURC
           $state.go('login');
           return false;
         } else {
-          window.USER = data;
+          console.log('here');
+          console.log(data);
+          $rootScope.USER = data;
           return data;
         }
       }).error(function(err) {
