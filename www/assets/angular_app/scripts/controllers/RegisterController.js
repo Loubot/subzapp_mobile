@@ -14,7 +14,7 @@ angular.module('subzapp_mobile').controller('RegisterController', [
         console.log("Registration successfull " + (JSON.stringify(response)));
         window.localStorage.setItem('user_token', response.data.data.token);
         window.localStorage.setItem('user_id', response.data.data.user.id);
-        return $state.go('user');
+        return $state.go('all_org');
       }), function(errResponse) {
         console.log("Registration failed " + (JSON.stringify(errResponse.data.invalidAttributes.email[0].message)));
         window.USER = null;

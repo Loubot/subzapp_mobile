@@ -113,7 +113,8 @@ angular.module('subzapp_mobile').constant 'RESOURCES', do ->
   # Define your variable
   # console.log "url " + window.location.origin 
   # url = window.location.origin 
-  url = "http://localhost:1337"
+  # url = "http://localhost:1337"
+  url = "https://subzapp.herokuapp.com"
   # Use the variable in your constants
   {
     DOMAIN: url

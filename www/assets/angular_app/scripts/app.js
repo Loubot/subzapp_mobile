@@ -64,7 +64,7 @@ angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvi
 
 angular.module('subzapp_mobile').constant('RESOURCES', (function() {
   var url;
-  url = "http://localhost:1337";
+  url = "https://subzapp.herokuapp.com";
   return {
     DOMAIN: url
   };
