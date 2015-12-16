@@ -62,6 +62,22 @@ angular.module('subzapp_mobile').controller('TeamController', [
 
     $scope.edit_user = ->
       $state.go 'edit-user'
+
+    $scope.pay_up = (id, price) ->
+      $http(
+        method: 'POST'
+        url: "#{ RESOURCES.DOMAIN }/pay-for-event"
+        headers: { 'Authorization': "JWT #{ user_token }", "Content-Type": "application/json" }
+        data:
+          event_id: id
+          event_price: price           
+      ).then ( ( res ) ->
+        console.log "Pay up response"
+        console.log res
+      ), ( errResponse ) ->
+        console.log "Pay up error"
+        console.log errResponse
+
         
 ])
 #return truthy if user is already a member of the team. This drives ng-hide="is_member" in the team.html view

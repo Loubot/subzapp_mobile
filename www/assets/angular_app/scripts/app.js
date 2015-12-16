@@ -37,7 +37,8 @@ angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvi
   $stateProvider.state("edit-user", {
     cache: false,
     url: "/edit-user",
-    templateUrl: 'assets/angular_app/views/user/edit_user.html'
+    templateUrl: 'assets/angular_app/views/user/edit_user.html',
+    controller: "EditUserController"
   });
   $stateProvider.state("stripe-form", {
     url: "/stripe-form",
@@ -64,7 +65,7 @@ angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvi
 
 angular.module('subzapp_mobile').constant('RESOURCES', (function() {
   var url;
-  url = "https://subzapp.herokuapp.com";
+  url = "http://localhost:1337";
   return {
     DOMAIN: url
   };

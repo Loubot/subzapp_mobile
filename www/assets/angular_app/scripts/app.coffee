@@ -57,7 +57,7 @@ angular.module('subzapp_mobile').config ($stateProvider, $urlRouterProvider) ->
     cache: false
     url: "/edit-user"
     templateUrl : 'assets/angular_app/views/user/edit_user.html'
-    # controller: "EditUserController"
+    controller: "EditUserController"
 
   $stateProvider.state "stripe-form",
     url: "/stripe-form"
@@ -113,8 +113,8 @@ angular.module('subzapp_mobile').constant 'RESOURCES', do ->
   # Define your variable
   # console.log "url " + window.location.origin 
   # url = window.location.origin 
-  # url = "http://localhost:1337"
-  url = "https://subzapp.herokuapp.com"
+  url = "http://localhost:1337"
+  # url = "https://subzapp.herokuapp.com"
   # Use the variable in your constants
   {
     DOMAIN: url

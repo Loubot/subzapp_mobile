@@ -10,7 +10,8 @@ angular.module('subzapp_mobile').controller('EditUserController', [
         var USER;
         USER = $rootScope.USER;
         console.log(USER.tokens[0].amount);
-        return $scope.tokens = USER.tokens[0].amount;
+        $scope.tokens = USER.tokens[0].amount;
+        return $scope.user_data = USER;
       }), function(errResponse) {
         console.log("User get error " + (JSON.stringify(errResponse)));
         $rootScope.USER = null;
@@ -37,11 +38,13 @@ angular.module('subzapp_mobile').controller('EditUserController', [
           lastName: $scope.user_data.lastName
         }
       }).then((function(response) {
-        console.log("Edit user response " + (JSON.stringify(response)));
+        console.log("Edit user response ");
+        console.log(response);
         return message.success('User updated ok');
       }), function(errResponse) {
-        console.log("Edit user error " + (JSON.stringify(errResponse)));
-        return message.errir(JSON.stringify(errResponse));
+        console.log("Edit user error");
+        console.log(errResponse);
+        return message.error(JSON.stringify(errResponse));
       });
     };
 

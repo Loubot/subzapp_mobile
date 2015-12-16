@@ -24,6 +24,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular-sanitize": "~1.4.8"
+    "angular-sanitize": "~1.4.8",
+    "Ionicons": "ionicons#~2.0.1"
   }
 }

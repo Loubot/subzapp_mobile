@@ -12,7 +12,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
   '$rootScope'
   '$ionicModal'
   ( $scope, $state, $http, $window, message, user, RESOURCES, stripe, $rootScope, $ionicModal ) ->
-    console.log 'EditUser Controller'
+    console.log 'EditUser Controller'    
     
     user_token = window.localStorage.getItem 'user_token'
     
@@ -23,6 +23,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
         USER = $rootScope.USER
         console.log USER.tokens[0].amount
         $scope.tokens = USER.tokens[0].amount
+        $scope.user_data = USER
       ), ( errResponse ) ->
         console.log "User get error #{ JSON.stringify errResponse }"
         $rootScope.USER = null
@@ -47,11 +48,13 @@ angular.module('subzapp_mobile').controller('EditUserController', [
           firstName: $scope.user_data.firstName
           lastName: $scope.user_data.lastName
       ).then ( (response) ->
-        console.log "Edit user response #{ JSON.stringify response }"
+        console.log "Edit user response "
+        console.log response
         message.success('User updated ok')
       ), ( errResponse ) ->
-        console.log "Edit user error #{ JSON.stringify errResponse }"
-        message.errir JSON.stringify errResponse
+        console.log "Edit user error"
+        console.log errResponse
+        message.error JSON.stringify errResponse
 
 
     ### Stripe payments ###
@@ -113,8 +116,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
       stripe.setPublishableKey('pk_test_bfa4lYmoaJZTm9d94qBTEEra')
       stripe.card.createToken $scope.card, stripe_response
       # console.log stripe
-    # stripeProvider.setPublishableKey('pk_test_bfa4lYmoaJZTm9d94qBTEEra')
-
+    
     $scope.add_validation = (e) ->
       console.log "he hey"
       t = e.target

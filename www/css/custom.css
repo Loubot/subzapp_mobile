@@ -19,11 +19,11 @@ body{
 }
 
 .nav-bar-container{
-  margin-bottom: 100px;
+  /*margin-bottom: 100px;*/
 }
 
 ion-view{
-  margin-top: 50px !important;
+  /*margin-top: 50px !important;*/
 }
 .login_form{
   color: #FFF;

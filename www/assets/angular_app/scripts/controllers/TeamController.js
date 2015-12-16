@@ -52,8 +52,28 @@ angular.module('subzapp_mobile').controller('TeamController', [
         return console.log("Join team error " + (JSON.stringify(errResponse)));
       });
     };
-    return $scope.edit_user = function() {
+    $scope.edit_user = function() {
       return $state.go('edit-user');
+    };
+    return $scope.pay_up = function(id, price) {
+      return $http({
+        method: 'POST',
+        url: RESOURCES.DOMAIN + "/pay-for-event",
+        headers: {
+          'Authorization': "JWT " + user_token,
+          "Content-Type": "application/json"
+        },
+        data: {
+          event_id: id,
+          event_price: price
+        }
+      }).then((function(res) {
+        console.log("Pay up response");
+        return console.log(res);
+      }), function(errResponse) {
+        console.log("Pay up error");
+        return console.log(errResponse);
+      });
     };
   }
 ]);
