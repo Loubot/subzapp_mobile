@@ -1,7 +1,7 @@
-<ion-view view-title="Edit details" ng-controller="EditUserController">
+<ion-view view-title="Edit details" >
   <ion-content class="padding">
     <div class="well">
-       <form name="ccForm" ng-submit="stripe_submit()" name="token_form" class="black_text" ng-controller="EditUserController"
+       <form name="ccForm" ng-submit="stripe_submit()" name="token_form" class="black_text"
              method="post" enctype="application/x-www-form-urlencoded">
 
          <div class="list">
@@ -46,50 +46,10 @@
            </label>
          </div> <!-- end of list -->
 
-        
-         <table class="table">
-          <tr>
-            <th>Valid</th>
-            <th>Type</th>
-          </tr>
-          <tr>
-            <td>
-              {{ccForm.ccNumber.$valid | yesNo}}
-            </td>
-            <td>
-              {{ccForm.ccNumber.$ccType || 'Unknown'}}
-            </td>
-          </tr>
-        </table>
-        <table class="table">
-          <tr>
-            <th>Valid</th>
-          </tr>
-          <tr>
-            <td>
-              {{ccForm.ccCvc.$valid | yesNo}}
-            </td>
-          </tr>
-        </table>
-        <input type="image" alt="Submit Form" src="img/stripe.png" value="Pay up" ng-show="ccForm.ccNumber.$valid && ccForm.ccCvc.$valid && !ccForm.$error.ccExp && ccForm.ccExpYear.$valid && ccForm.ccExpMonth.$valid">
-        <table class="table">
-          <tr>
-            <th>Valid Month</th>
-            <th>Valid Year</th>
-            <th>Valid Pair</th>
-          </tr>
-          <tr>
-            <td>
-              {{ccForm.ccExpMonth.$valid | yesNo}}
-            </td>
-            <td>
-              {{ccForm.ccExpYear.$valid | yesNo}}
-            </td>
-            <td>
-              {{!ccForm.$error.ccExp | yesNo}}
-            </td>
-          </tr>
-        </table>
+      
+        <div class="center-text">
+          <input alt="Submit Form" class="image_submit btn btn-primary" ng-click="stripe_submit()" value="Pay with stripe" ng-show="ccForm.ccNumber.$valid && ccForm.ccCvc.$valid && !ccForm.$error.ccExp && ccForm.ccExpYear.$valid && ccForm.ccExpMonth.$valid">
+        </div>
       </form>
 
     </div>
