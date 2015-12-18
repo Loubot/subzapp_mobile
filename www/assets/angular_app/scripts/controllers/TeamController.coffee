@@ -43,17 +43,17 @@ angular.module('subzapp_mobile').controller('TeamController', [
 
   
     $scope.join_team = (id) ->
-      console.log "User #{ USER.id }"
+      console.log "User #{ user.id }"
       $http(
         method: 'POST'
         url: "#{ RESOURCES.DOMAIN }/join-team"
         headers: { 'Authorization': "JWT #{ user_token }", "Content-Type": "application/json" }
         data:
-          user_id: USER.id
+          user_id: user.id
           team_id: $location.search().id
       ).then ( (res) ->
         console.log "Join team response #{ JSON.stringify res }"
-        $scope.is_member = check_if_member_after_create(res.data.team_members, USER.id)
+        $scope.is_member = check_if_member_after_create(res.data.team_members, user.id)
         
         # console.log "teams #{ JSON.stringify team }"
         # $scope.is_member = team.length
@@ -64,6 +64,7 @@ angular.module('subzapp_mobile').controller('TeamController', [
       $state.go 'edit-user'
 
     $scope.pay_up = (id, price) ->
+      console.log "Pay up"
       $http(
         method: 'POST'
         url: "#{ RESOURCES.DOMAIN }/join-event"

@@ -12,7 +12,8 @@ angular.module('subzapp_mobile').controller('EditUserController', [
   '$rootScope'
   '$ionicModal'
   ( $scope, $state, $http, $window, message, user, RESOURCES, stripe, $rootScope, $ionicModal ) ->
-    console.log 'EditUser Controller'    
+    console.log 'EditUser Controller'
+    $scope.card = {}
     
     user_token = window.localStorage.getItem 'user_token'
     
@@ -66,7 +67,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
     #   exp_year: 17
 
     $scope.stripe_submit = ->
-      # console.log 'stripe'
+      console.log 'stripe'
       # console.log $scope.card
 
       amount = $scope.card.amount

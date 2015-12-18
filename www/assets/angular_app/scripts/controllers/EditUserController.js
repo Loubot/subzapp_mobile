@@ -4,6 +4,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
   '$scope', '$state', '$http', '$window', 'message', 'user', 'RESOURCES', 'stripe', '$rootScope', '$ionicModal', function($scope, $state, $http, $window, message, user, RESOURCES, stripe, $rootScope, $ionicModal) {
     var USER, user_token;
     console.log('EditUser Controller');
+    $scope.card = {};
     user_token = window.localStorage.getItem('user_token');
     if (!(window.USER != null)) {
       user.get_user().then((function(res) {
@@ -51,6 +52,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
     /* Stripe payments */
     $scope.stripe_submit = function() {
       var amount, stripe_response;
+      console.log('stripe');
       amount = $scope.card.amount;
       delete $scope.card.amount;
       stripe_response = function(status, token) {

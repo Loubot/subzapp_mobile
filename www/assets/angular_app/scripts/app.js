@@ -42,7 +42,8 @@ angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvi
   });
   $stateProvider.state("stripe-form", {
     url: "/stripe-form",
-    templateUrl: 'assets/angular_app/views/user/stripe_form.html'
+    templateUrl: 'assets/angular_app/views/user/stripe_form.html',
+    controller: 'EditUserController'
   });
   $stateProvider.state("org", {
     url: "/org",
@@ -54,7 +55,8 @@ angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvi
   });
   $stateProvider.state("team", {
     url: "/team",
-    templateUrl: 'assets/angular_app/views/team/team.html'
+    templateUrl: 'assets/angular_app/views/team/team.html',
+    controller: "TeamController"
   });
   $stateProvider.state("token", {
     url: "/token",

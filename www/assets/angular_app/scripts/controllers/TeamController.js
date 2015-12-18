@@ -33,7 +33,7 @@ angular.module('subzapp_mobile').controller('TeamController', [
       return console.log("Get team error " + (JSON.stringify(errResponse)));
     });
     $scope.join_team = function(id) {
-      console.log("User " + USER.id);
+      console.log("User " + user.id);
       return $http({
         method: 'POST',
         url: RESOURCES.DOMAIN + "/join-team",
@@ -42,12 +42,12 @@ angular.module('subzapp_mobile').controller('TeamController', [
           "Content-Type": "application/json"
         },
         data: {
-          user_id: USER.id,
+          user_id: user.id,
           team_id: $location.search().id
         }
       }).then((function(res) {
         console.log("Join team response " + (JSON.stringify(res)));
-        return $scope.is_member = check_if_member_after_create(res.data.team_members, USER.id);
+        return $scope.is_member = check_if_member_after_create(res.data.team_members, user.id);
       }), function(errResponse) {
         return console.log("Join team error " + (JSON.stringify(errResponse)));
       });
@@ -56,6 +56,7 @@ angular.module('subzapp_mobile').controller('TeamController', [
       return $state.go('edit-user');
     };
     return $scope.pay_up = function(id, price) {
+      console.log("Pay up");
       return $http({
         method: 'POST',
         url: RESOURCES.DOMAIN + "/join-event",
