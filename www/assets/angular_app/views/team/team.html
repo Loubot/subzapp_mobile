@@ -28,10 +28,10 @@
           <input type="search" ng-model="q" placeholder="filter clubs..." aria-label="filter friends" class="black_text" />
           <br>
           <li class="animate-repeat clearfix org_list" ng-repeat="event in events | filter:q as results">
-            <a href="" class="pull-left">[{{$index + 1}}] {{ event.name }}, Time: {{ event.date | date: 'medium' }}. <br>
+            <a href="" >[{{$index + 1}}] {{ event.name }}, Time: {{ event.date | date: 'medium' }}. <br>
               Price: {{ event.price }}
-            </a>
-            <a href="" ng-click="pay_up(event.id, event.price)" class="pull-right btn-xs btn-primary">Pay up</a>
+            </a><br>
+            <a href="" ng-click="pay_up(event.id, event.price)" class="pull-right pay_up btn-xs btn-primary">Pay up</a>
           </li>
           <li class="animate-repeat" ng-if="orgs.length == 0">
             <strong>No results found...</strong>

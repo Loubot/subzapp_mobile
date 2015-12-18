@@ -66,11 +66,12 @@ angular.module('subzapp_mobile').controller('TeamController', [
     $scope.pay_up = (id, price) ->
       $http(
         method: 'POST'
-        url: "#{ RESOURCES.DOMAIN }/pay-for-event"
+        url: "#{ RESOURCES.DOMAIN }/join-event"
         headers: { 'Authorization': "JWT #{ user_token }", "Content-Type": "application/json" }
         data:
           event_id: id
-          event_price: price           
+          event_price: price
+          user_id: user.id         
       ).then ( ( res ) ->
         console.log "Pay up response"
         console.log res
