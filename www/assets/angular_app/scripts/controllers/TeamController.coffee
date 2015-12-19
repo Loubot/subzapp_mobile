@@ -12,18 +12,29 @@ angular.module('subzapp_mobile').controller('TeamController', [
   '$rootScope'
 
   ($scope, $state, $http, $window, $location, message, user, RESOURCES, $rootScope ) ->
+    get_user_events_array = ( events ) ->
+      events_array = []
+      for ev in events
+        do ( ev ) ->
+          events_array.push ev.id
+      
+      return events_array
+
     console.log "Team Controller"
+
     user_token = window.localStorage.getItem 'user_token'    
 
     user.get_user().then ( (res) ->
       user = $rootScope.USER
-      console.log user
+      console.log user.user_events
+      $scope.users_event_ids = get_user_events_array( user.user_events )
+      
       # console.log "Got user #{ JSON.stringify res }"
       # console.log USER.tokens[0].amount
       $scope.is_member = check_if_member(user, $location.search().id)
       $scope.user = user
     ), ( err ) ->
-      window.USER = null
+      # window.USER = null
       $state.go 'login'
 
 
@@ -76,9 +87,13 @@ angular.module('subzapp_mobile').controller('TeamController', [
       ).then ( ( res ) ->
         console.log "Pay up response"
         console.log res
+        $scope.users_event_ids = get_user_events_array res.data.user.user_events
+        $rootScope.USER = res.data.user
+        message.success res.data.message
       ), ( errResponse ) ->
         console.log "Pay up error"
         console.log errResponse
+        message.error errResponse.data
 
         
 ])

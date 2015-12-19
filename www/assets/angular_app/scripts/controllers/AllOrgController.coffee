@@ -32,7 +32,7 @@ angular.module('subzapp_mobile').controller('AllOrgController', [
         headers: { 'Authorization': "JWT #{ user_token }", "Content-Type": "application/json" }
     ).then ( ( orgs ) ->
         # console.log "All orgs " 
-        # console.log orgs
+        console.log orgs
         $scope.orgs = orgs.data
     ), ( errResponse ) ->
         console.log "Get all org error "

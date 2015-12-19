@@ -4,16 +4,28 @@ var check_if_member, check_if_member_after_create;
 
 angular.module('subzapp_mobile').controller('TeamController', [
   '$scope', '$state', '$http', '$window', '$location', 'message', 'user', 'RESOURCES', '$rootScope', function($scope, $state, $http, $window, $location, message, user, RESOURCES, $rootScope) {
-    var user_token;
+    var get_user_events_array, user_token;
+    get_user_events_array = function(events) {
+      var ev, events_array, fn, i, len;
+      events_array = [];
+      fn = function(ev) {
+        return events_array.push(ev.id);
+      };
+      for (i = 0, len = events.length; i < len; i++) {
+        ev = events[i];
+        fn(ev);
+      }
+      return events_array;
+    };
     console.log("Team Controller");
     user_token = window.localStorage.getItem('user_token');
     user.get_user().then((function(res) {
       user = $rootScope.USER;
-      console.log(user);
+      console.log(user.user_events);
+      $scope.users_event_ids = get_user_events_array(user.user_events);
       $scope.is_member = check_if_member(user, $location.search().id);
       return $scope.user = user;
     }), function(err) {
-      window.USER = null;
       return $state.go('login');
     });
     $http({
@@ -71,10 +83,14 @@ angular.module('subzapp_mobile').controller('TeamController', [
         }
       }).then((function(res) {
         console.log("Pay up response");
-        return console.log(res);
+        console.log(res);
+        $scope.users_event_ids = get_user_events_array(res.data.user.user_events);
+        $rootScope.USER = res.data.user;
+        return message.success(res.data.message);
       }), function(errResponse) {
         console.log("Pay up error");
-        return console.log(errResponse);
+        console.log(errResponse);
+        return message.error(errResponse.data);
       });
     };
   }

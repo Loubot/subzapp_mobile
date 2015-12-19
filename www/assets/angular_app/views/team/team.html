@@ -2,7 +2,7 @@
   <ion-nav-title>
       {{ team.name }}
   </ion-nav-title>
-  <ion-content class="padding do_it">
+  <ion-content class="padding">
     
     <div class="container-fluid text-center" >
       <h2 class="white_text">{{ team.main_org.name }}</h2>
@@ -11,7 +11,8 @@
         Join this team?
 
       </p>
-      <a href="" class="btn btn-lg btn-success" ng-hide="is_member" ng-click="join_team(team.id)">Join {{ event.name }}!</a>
+      
+      <a href="" class="btn btn-lg btn-success" ng-hide="is_member" ng-click="join_team(team.id)"><i class="ion-android-person-add"></i> Join </a>
 
       <div ng-show="is_member">
         You are a member!
@@ -31,7 +32,15 @@
             <a href="" >[{{$index + 1}}] {{ event.name }}, Time: {{ event.date | date: 'medium' }}. <br>
               Price: {{ event.price }}
             </a><br>
-            <a href="" ng-click="pay_up(event.id, event.price)" class="pull-right pay_up btn-xs btn-primary">Pay up</a>
+            <a href="" ng-click="pay_up(event.id, event.price)" 
+                class="pull-right pay_up btn btn-primary"
+                ng-if="users_event_ids.indexOf(event.id) === -1" >Pay up</a>
+
+            <a href="" ng-click="pay_up(event.id, event.price)" 
+                class="pull-right pay_up btn btn-xs btn-success"
+                ng-if="users_event_ids.indexOf(event.id) !== -1" >Paid</a>
+
+            
           </li>
           <li class="animate-repeat" ng-if="orgs.length == 0">
             <strong>No results found...</strong>
@@ -40,6 +49,10 @@
       </div>
     </div> <!-- end of container-fluid -->
     
+    <div class="message">
+        
+        
+    </div>
   </ion-content>
 </ion-view>
 

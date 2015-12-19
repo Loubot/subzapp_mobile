@@ -135,6 +135,7 @@ angular.module('subzapp_mobile').factory 'message', ->
     ), 10000
     
   success: ( mes ) ->
+    console.log mes
     $('.message').removeClass 'error_message'
     $('.message').addClass 'success_message'
     $('.message').text mes

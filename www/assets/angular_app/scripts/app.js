@@ -89,6 +89,7 @@ angular.module('subzapp_mobile').factory('message', function() {
       }), 10000);
     },
     success: function(mes) {
+      console.log(mes);
       $('.message').removeClass('error_message');
       $('.message').addClass('success_message');
       $('.message').text(mes);
