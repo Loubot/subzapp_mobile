@@ -35,9 +35,6 @@ angular.module('subzapp_mobile').controller('LoginController', [
       ).error (err) ->
         console.log err
         $('.login_error').show 'slide', { direction: 'right' }, 1000
-        message.error err.message
-        window.USER = null
-        console.log "error!!!!!" + JSON.stringify err
-        return
+        $state.go 'register'
       return
 ])

@@ -92,14 +92,14 @@ left: -200px;
   /*background:white;*/
   /*border:1px solid black*/;
   list-style:none;
-  margin:5px;
+  /*margin:5px;*/
   /*padding:0 10px;*/
 }
 
 .example-animate-container li {  
   background:white;
   border:1px solid black;
-  padding: 5px;
+  /*padding: 5px;*/
   margin-bottom: 5px;
 }
 
