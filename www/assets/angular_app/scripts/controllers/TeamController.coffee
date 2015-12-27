@@ -9,15 +9,17 @@ angular.module('subzapp_mobile').controller('TeamController', [
   'message'
   'user'
   'RESOURCES'
+  '$ionicLoading'
   '$rootScope'
 
-  ($scope, $state, $http, $window, $location, message, user, RESOURCES, $rootScope ) ->
+  ($scope, $state, $http, $window, $location, message, user, RESOURCES, $ionicLoading, $rootScope ) ->
     get_user_events_array = ( events ) ->
       events_array = []
+      return [] if !(events?)
       for ev in events
         do ( ev ) ->
           events_array.push ev.id
-      
+      console.log events_array
       return events_array
 
     console.log "Team Controller"
@@ -25,9 +27,10 @@ angular.module('subzapp_mobile').controller('TeamController', [
     user_token = window.localStorage.getItem 'user_token'    
 
     user.get_user().then ( (res) ->
+      console.log $rootScope.USER
       user = $rootScope.USER
       console.log user.user_events
-      $scope.users_event_ids = get_user_events_array( user.user_events )
+      $scope.users_event_ids = get_user_events_array( res.user_events )
       
       # console.log "Got user #{ JSON.stringify res }"
       # console.log USER.tokens[0].amount
@@ -55,6 +58,7 @@ angular.module('subzapp_mobile').controller('TeamController', [
   
     $scope.join_team = (id) ->
       console.log "User #{ user.id }"
+      $ionicLoading.show template: 'Joining team...'
       $http(
         method: 'POST'
         url: "#{ RESOURCES.DOMAIN }/join-team"
@@ -65,11 +69,12 @@ angular.module('subzapp_mobile').controller('TeamController', [
       ).then ( (res) ->
         console.log "Join team response #{ JSON.stringify res }"
         $scope.is_member = check_if_member_after_create(res.data.team_members, user.id)
-        
+        $ionicLoading.hide()
         # console.log "teams #{ JSON.stringify team }"
         # $scope.is_member = team.length
       ), ( errResponse ) ->
         console.log "Join team error #{ JSON.stringify errResponse }"
+        $ionicLoading.hide()
 
     $scope.edit_user = ->
       $state.go 'edit-user'

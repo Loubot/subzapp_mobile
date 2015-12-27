@@ -59,6 +59,12 @@ angular.module('subzapp_mobile').config ($stateProvider, $urlRouterProvider) ->
     templateUrl : 'assets/angular_app/views/user/edit_user.html'
     controller: "EditUserController"
 
+  $stateProvider.state "my-teams",
+    cache: false
+    url: "/my-teams"
+    templateUrl : 'assets/angular_app/views/user/my_teams.html'
+    controller: "MyTeamsController"
+
   $stateProvider.state "stripe-form",
     url: "/stripe-form"
     templateUrl : 'assets/angular_app/views/user/stripe_form.html'

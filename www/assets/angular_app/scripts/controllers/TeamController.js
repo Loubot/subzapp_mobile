@@ -3,11 +3,14 @@
 var check_if_member, check_if_member_after_create;
 
 angular.module('subzapp_mobile').controller('TeamController', [
-  '$scope', '$state', '$http', '$window', '$location', 'message', 'user', 'RESOURCES', '$rootScope', function($scope, $state, $http, $window, $location, message, user, RESOURCES, $rootScope) {
+  '$scope', '$state', '$http', '$window', '$location', 'message', 'user', 'RESOURCES', '$ionicLoading', '$rootScope', function($scope, $state, $http, $window, $location, message, user, RESOURCES, $ionicLoading, $rootScope) {
     var get_user_events_array, user_token;
     get_user_events_array = function(events) {
       var ev, events_array, fn, i, len;
       events_array = [];
+      if (!(events != null)) {
+        return [];
+      }
       fn = function(ev) {
         return events_array.push(ev.id);
       };
@@ -15,14 +18,16 @@ angular.module('subzapp_mobile').controller('TeamController', [
         ev = events[i];
         fn(ev);
       }
+      console.log(events_array);
       return events_array;
     };
     console.log("Team Controller");
     user_token = window.localStorage.getItem('user_token');
     user.get_user().then((function(res) {
+      console.log($rootScope.USER);
       user = $rootScope.USER;
       console.log(user.user_events);
-      $scope.users_event_ids = get_user_events_array(user.user_events);
+      $scope.users_event_ids = get_user_events_array(res.user_events);
       $scope.is_member = check_if_member(user, $location.search().id);
       return $scope.user = user;
     }), function(err) {
@@ -46,6 +51,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
     });
     $scope.join_team = function(id) {
       console.log("User " + user.id);
+      $ionicLoading.show({
+        template: 'Joining team...'
+      });
       return $http({
         method: 'POST',
         url: RESOURCES.DOMAIN + "/join-team",
@@ -59,9 +67,11 @@ angular.module('subzapp_mobile').controller('TeamController', [
         }
       }).then((function(res) {
         console.log("Join team response " + (JSON.stringify(res)));
-        return $scope.is_member = check_if_member_after_create(res.data.team_members, user.id);
+        $scope.is_member = check_if_member_after_create(res.data.team_members, user.id);
+        return $ionicLoading.hide();
       }), function(errResponse) {
-        return console.log("Join team error " + (JSON.stringify(errResponse)));
+        console.log("Join team error " + (JSON.stringify(errResponse)));
+        return $ionicLoading.hide();
       });
     };
     $scope.edit_user = function() {

@@ -3,7 +3,7 @@
       {{ team.name }}
   </ion-nav-title>
   <ion-content class="padding">
-    
+    <ion-spinner></ion-spinner>
     <div class="container-fluid text-center" >
       <h2 class="white_text">{{ team.main_org.name }}</h2>
       <h4 class="white_text">{{ team.name }}</h4>
@@ -36,7 +36,7 @@
                 class="pull-right pay_up btn btn-primary"
                 ng-if="users_event_ids.indexOf(event.id) === -1" >Pay up</a>
 
-            <a href="" ng-click="pay_up(event.id, event.price)" 
+            <a href="" 
                 class="pull-right pay_up btn btn-xs btn-success"
                 ng-if="users_event_ids.indexOf(event.id) !== -1" >Paid</a>
 
