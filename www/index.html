@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app="subzapp_mobile">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Subzapp</title>
+
+   
+    <!-- <link href="css/style.css" rel="stylesheet"> -->
+    
+    <link rel="stylesheet" type="text/css" href="assets/bower/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/bower/Ionicons/css/ionicons.min.css" />
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <!-- <script src="lib/ionic/js/ionic.bundle.js"></script> -->
+     
+
+    <script src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript" src="assets/bower/angular/angular.js"></script>
+    <script type="text/javascript" src="assets/bower/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="assets/bower/angular-animate/angular-animate.js"></script>        
+    <script type="text/javascript" src="assets/bower/angular-sanitize/angular-sanitize.js"></script>        
+    <script type="text/javascript" src="assets/bower/angular-stripe/release/angular-stripe.js"></script>        
+    <script type="text/javascript" src="assets/bower/angular-credit-cards/release/angular-credit-cards.js"></script>        
+    <script type="text/javascript" src="js/angular-ui-router.js"></script>
+    <script type="text/javascript" src="assets/bower/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/bower/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="assets/bower/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="lib/ionic/js/ionic.js"></script> 
+    <script src="lib/ionic/js/ionic-angular.js"></script> 
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- controllers -->
+    <script src="assets/angular_app/scripts/app.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/app.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/controllers/LoginController.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/controllers/RegisterController.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/controllers/UserController.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/controllers/EditUserController.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/controllers/OrgController.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/controllers/AllOrgController.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/controllers/TeamController.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/controllers/TokenController.js"></script>
+    <script type="text/javascript" src="assets/angular_app/scripts/controllers/NavController.js"></script>
+
+    <!-- your app's js -->
+    
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+  </head>
+  <body>
+    <!--
+      The nav bar that will be updated as we navigate between views.
+    -->
+    <ion-nav-bar class="bar-stable main_nav">
+      <ion-nav-back-button>
+      </ion-nav-back-button>
+    </ion-nav-bar>
+    <!--
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view> 
+      
+    </ion-nav-view>
+
+    <ion-footer-bar ng-show="USER" align-title="left" class="bar-assertive">
+      <div class="buttons">
+        <a href="#/edit-user" class="button"><i class="icon ion-gear-b"></i></a>
+      </div>
+      <h1 class="title">Tokens left: {{ USER.tokens[0].amount }}</h1>
+      <div class="buttons">
+        <a href="#/edit-user" class="button">Buy tokens</a>
+        
+      </div>
+    </ion-footer-bar>
+    
+  </body>
+</html>
+
+
+
+<!-- <ion-footer-bar align-title="left" class="bar-assertive">
+  <div class="buttons">
+    <button class="button">Left Button</button>
+  </div>
+  <h1 class="title">Title!</h1>
+  <div class="buttons" ng-click="doSomething()">
+    <button class="button">Right Button</button>
+  </div>
+</ion-footer-bar> -->
