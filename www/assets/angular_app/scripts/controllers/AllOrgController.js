@@ -16,6 +16,7 @@ angular.module('subzapp_mobile').controller('AllOrgController', [
         "Content-Type": "application/json"
       }
     }).then((function(orgs) {
+      console.log(orgs);
       return $scope.orgs = orgs.data;
     }), function(errResponse) {
       console.log("Get all org error ");

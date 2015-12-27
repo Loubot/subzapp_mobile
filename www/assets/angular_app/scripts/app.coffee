@@ -62,6 +62,7 @@ angular.module('subzapp_mobile').config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state "stripe-form",
     url: "/stripe-form"
     templateUrl : 'assets/angular_app/views/user/stripe_form.html'
+    controller: 'EditUserController'
 
   $stateProvider.state "org",
     url: "/org"
@@ -76,7 +77,7 @@ angular.module('subzapp_mobile').config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state "team",
     url: "/team"
     templateUrl : 'assets/angular_app/views/team/team.html'
-    # controller: "TeamController"
+    controller: "TeamController"
 
   $stateProvider.state "token",
     url: "/token"
@@ -134,6 +135,7 @@ angular.module('subzapp_mobile').factory 'message', ->
     ), 10000
     
   success: ( mes ) ->
+    console.log mes
     $('.message').removeClass 'error_message'
     $('.message').addClass 'success_message'
     $('.message').text mes

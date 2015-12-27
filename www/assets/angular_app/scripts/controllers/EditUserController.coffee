@@ -12,28 +12,24 @@ angular.module('subzapp_mobile').controller('EditUserController', [
   '$rootScope'
   '$ionicModal'
   ( $scope, $state, $http, $window, message, user, RESOURCES, stripe, $rootScope, $ionicModal ) ->
-    console.log 'EditUser Controller'    
+    console.log 'EditUser Controller'
+    $scope.card = {}
     
     user_token = window.localStorage.getItem 'user_token'
     
-    if !(window.USER?)
-      user.get_user().then ( (res) ->
+    
+    user.get_user().then ( (res) ->
         # console.log res
                 
-        USER = $rootScope.USER
-        console.log USER.tokens[0].amount
-        $scope.tokens = USER.tokens[0].amount
-        $scope.user_data = USER
-      ), ( errResponse ) ->
-        console.log "User get error #{ JSON.stringify errResponse }"
-        $rootScope.USER = null
-        $state.go 'login'
-    else 
-      console.log 'else'
       USER = $rootScope.USER
-      $scope.orgs = USER.orgs
-      $scope.user = USER
+      console.log USER.tokens[0].amount
       $scope.tokens = USER.tokens[0].amount
+      $scope.user_data = USER
+    ), ( errResponse ) ->
+      console.log "User get error #{ JSON.stringify errResponse }"
+      $rootScope.USER = null
+      $state.go 'login'
+    
 
     
     $scope.edit_user = ->
@@ -66,7 +62,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
     #   exp_year: 17
 
     $scope.stripe_submit = ->
-      # console.log 'stripe'
+      console.log 'stripe'
       # console.log $scope.card
 
       amount = $scope.card.amount

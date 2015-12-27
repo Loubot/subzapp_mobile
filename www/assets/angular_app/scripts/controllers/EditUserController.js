@@ -2,28 +2,21 @@
 'use strict';
 angular.module('subzapp_mobile').controller('EditUserController', [
   '$scope', '$state', '$http', '$window', 'message', 'user', 'RESOURCES', 'stripe', '$rootScope', '$ionicModal', function($scope, $state, $http, $window, message, user, RESOURCES, stripe, $rootScope, $ionicModal) {
-    var USER, user_token;
+    var user_token;
     console.log('EditUser Controller');
+    $scope.card = {};
     user_token = window.localStorage.getItem('user_token');
-    if (!(window.USER != null)) {
-      user.get_user().then((function(res) {
-        var USER;
-        USER = $rootScope.USER;
-        console.log(USER.tokens[0].amount);
-        $scope.tokens = USER.tokens[0].amount;
-        return $scope.user_data = USER;
-      }), function(errResponse) {
-        console.log("User get error " + (JSON.stringify(errResponse)));
-        $rootScope.USER = null;
-        return $state.go('login');
-      });
-    } else {
-      console.log('else');
+    user.get_user().then((function(res) {
+      var USER;
       USER = $rootScope.USER;
-      $scope.orgs = USER.orgs;
-      $scope.user = USER;
+      console.log(USER.tokens[0].amount);
       $scope.tokens = USER.tokens[0].amount;
-    }
+      return $scope.user_data = USER;
+    }), function(errResponse) {
+      console.log("User get error " + (JSON.stringify(errResponse)));
+      $rootScope.USER = null;
+      return $state.go('login');
+    });
     $scope.edit_user = function() {
       return $http({
         method: 'POST',
@@ -51,6 +44,7 @@ angular.module('subzapp_mobile').controller('EditUserController', [
     /* Stripe payments */
     $scope.stripe_submit = function() {
       var amount, stripe_response;
+      console.log('stripe');
       amount = $scope.card.amount;
       delete $scope.card.amount;
       stripe_response = function(status, token) {
