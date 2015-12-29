@@ -78,7 +78,7 @@ angular.module('subzapp_mobile').config ($stateProvider, $urlRouterProvider) ->
   $stateProvider.state "all_org",
     url: "/all-org"
     templateUrl : 'assets/angular_app/views/org/all-org.html'
-    # controller: "AllOrgController"
+    controller: "AllOrgController"
 
   $stateProvider.state "team",
     url: "/team"

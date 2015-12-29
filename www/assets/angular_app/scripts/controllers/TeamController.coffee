@@ -13,13 +13,15 @@ angular.module('subzapp_mobile').controller('TeamController', [
   '$rootScope'
 
   ($scope, $state, $http, $window, $location, message, user, RESOURCES, $ionicLoading, $rootScope ) ->
+    team_id = window.localStorage.getItem 'team_id'
     get_user_events_array = ( events ) ->
       events_array = []
       return [] if !(events?)
       for ev in events
         do ( ev ) ->
           events_array.push ev.id
-      console.log events_array
+      # console.log 'events array'
+      # console.log events_array
       return events_array
 
     console.log "Team Controller"
@@ -27,14 +29,16 @@ angular.module('subzapp_mobile').controller('TeamController', [
     user_token = window.localStorage.getItem 'user_token'    
 
     user.get_user().then ( (res) ->
+      $scope.users_event_ids = null
+
       console.log $rootScope.USER
       user = $rootScope.USER
-      console.log user.user_events
-      $scope.users_event_ids = get_user_events_array( res.user_events )
+      # console.log user.user_events
+      $scope.users_event_ids = get_user_events_array( $rootScope.USER.user_events )
+      # console.log 'user events'
+      # console.log $scope.users_event_ids
       
-      # console.log "Got user #{ JSON.stringify res }"
-      # console.log USER.tokens[0].amount
-      $scope.is_member = check_if_member(user, $location.search().id)
+      $scope.is_member = check_if_member(user, team_id)
       $scope.user = user
     ), ( err ) ->
       # window.USER = null
@@ -47,9 +51,10 @@ angular.module('subzapp_mobile').controller('TeamController', [
         url: "#{ RESOURCES.DOMAIN }/get-team"
         headers: { 'Authorization': "JWT #{ user_token }", "Content-Type": "application/json" }
         params:
-          team_id: $location.search().id
+          team_id: team_id
       ).then ( (res) ->
-        # console.log res.data
+        console.log 'team'
+        console.log res.data
         $scope.team = res.data
         $scope.events = res.data.events
       ), ( errResponse ) ->
@@ -65,9 +70,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
         headers: { 'Authorization': "JWT #{ user_token }", "Content-Type": "application/json" }
         data:
           user_id: user.id
-          team_id: $location.search().id
+          team_id: team_id
       ).then ( (res) ->
-        console.log "Join team response #{ JSON.stringify res }"
+        # console.log "Join team response #{ JSON.stringify res }"
         $scope.is_member = check_if_member_after_create(res.data.team_members, user.id)
         $ionicLoading.hide()
         # console.log "teams #{ JSON.stringify team }"
@@ -92,7 +97,7 @@ angular.module('subzapp_mobile').controller('TeamController', [
       ).then ( ( res ) ->
         console.log "Pay up response"
         console.log res
-        $scope.users_event_ids = get_user_events_array res.data.user.user_events
+        $scope.users_event_ids = get_user_events_array( res.data.user.user_events )
         $rootScope.USER = res.data.user
         message.success res.data.message
       ), ( errResponse ) ->
@@ -104,13 +109,17 @@ angular.module('subzapp_mobile').controller('TeamController', [
 ])
 #return truthy if user is already a member of the team. This drives ng-hide="is_member" in the team.html view
 check_if_member = (user, team_id) ->
+  # console.log 'user teams'
+  # console.log user.user_teams
   team = (team for team in user.user_teams when team.id is parseInt(team_id) )
-  console.log "Team result #{ typeof team }"
+  # console.log "Team result"
+  # console.log team
   return team.length
 
 check_if_member_after_create = ( team_mems, user_id )->
   # console.log "team_mems #{ JSON.stringify team_mems } team id #{ user_id }"
 
   users = ( mem for mem in team_mems when mem.id is user_id )
-  console.log "team #{ JSON.stringify users }"
+  # console.log "team #{ JSON.stringify users }"
+  # console.log users
   return users.length

@@ -4,7 +4,8 @@ var check_if_member, check_if_member_after_create;
 
 angular.module('subzapp_mobile').controller('TeamController', [
   '$scope', '$state', '$http', '$window', '$location', 'message', 'user', 'RESOURCES', '$ionicLoading', '$rootScope', function($scope, $state, $http, $window, $location, message, user, RESOURCES, $ionicLoading, $rootScope) {
-    var get_user_events_array, user_token;
+    var get_user_events_array, team_id, user_token;
+    team_id = window.localStorage.getItem('team_id');
     get_user_events_array = function(events) {
       var ev, events_array, fn, i, len;
       events_array = [];
@@ -18,17 +19,16 @@ angular.module('subzapp_mobile').controller('TeamController', [
         ev = events[i];
         fn(ev);
       }
-      console.log(events_array);
       return events_array;
     };
     console.log("Team Controller");
     user_token = window.localStorage.getItem('user_token');
     user.get_user().then((function(res) {
+      $scope.users_event_ids = null;
       console.log($rootScope.USER);
       user = $rootScope.USER;
-      console.log(user.user_events);
-      $scope.users_event_ids = get_user_events_array(res.user_events);
-      $scope.is_member = check_if_member(user, $location.search().id);
+      $scope.users_event_ids = get_user_events_array($rootScope.USER.user_events);
+      $scope.is_member = check_if_member(user, team_id);
       return $scope.user = user;
     }), function(err) {
       return $state.go('login');
@@ -41,9 +41,11 @@ angular.module('subzapp_mobile').controller('TeamController', [
         "Content-Type": "application/json"
       },
       params: {
-        team_id: $location.search().id
+        team_id: team_id
       }
     }).then((function(res) {
+      console.log('team');
+      console.log(res.data);
       $scope.team = res.data;
       return $scope.events = res.data.events;
     }), function(errResponse) {
@@ -63,10 +65,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
         },
         data: {
           user_id: user.id,
-          team_id: $location.search().id
+          team_id: team_id
         }
       }).then((function(res) {
-        console.log("Join team response " + (JSON.stringify(res)));
         $scope.is_member = check_if_member_after_create(res.data.team_members, user.id);
         return $ionicLoading.hide();
       }), function(errResponse) {
@@ -120,7 +121,6 @@ check_if_member = function(user, team_id) {
     }
     return results;
   })();
-  console.log("Team result " + (typeof team));
   return team.length;
 };
 
@@ -137,6 +137,5 @@ check_if_member_after_create = function(team_mems, user_id) {
     }
     return results;
   })();
-  console.log("team " + (JSON.stringify(users)));
   return users.length;
 };
