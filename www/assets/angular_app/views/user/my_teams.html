@@ -5,12 +5,7 @@
   <ion-content class="padding">
     <ion-spinner></ion-spinner>
     <div class="container-fluid text-center" >
-     <!--  <h2 class="white_text">{{ team.main_org.name }}</h2>
-      <h4 class="white_text">{{ team.name }}</h4>
-      <p ng-hide="is_member">
-        Join this team?
-
-      </p> -->      
+     <h1 class="white_text">Your teams</h1> 
     </div>
 
     <div class="container-fluid">
@@ -18,7 +13,7 @@
         <input type="search" ng-model="q" placeholder="filter teams..." aria-label="filter friends" class="black_text" />
         <br>
         <li class="animate-repeat clearfix org_list" ng-repeat="team in teams | filter:q as results">
-          <a href="" >[{{$index + 1}}] {{ team.main_org.name }}-- {{ team.name }}
+          <a href="" ng-click="select_team(team.id)">[{{$index + 1}}] {{ team.main_org.name }}-- {{ team.name }}
           </a><br>          
         </li>
         <li class="animate-repeat" ng-if="teams.length == 0">

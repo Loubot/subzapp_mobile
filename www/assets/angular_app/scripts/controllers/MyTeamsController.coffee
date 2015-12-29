@@ -55,5 +55,7 @@ angular.module('subzapp_mobile').controller('MyTeamsController', [
 
     
      
-
+    $scope.select_team = ( id ) ->
+      window.localStorage.setItem 'team_id', id
+      $state.go 'team'
 ])

@@ -16,7 +16,7 @@ angular.module('subzapp_mobile').controller('MyTeamsController', [
       return teams_array;
     };
     user_token = window.localStorage.getItem('user_token');
-    return user.get_user().then((function(res) {
+    user.get_user().then((function(res) {
       var USER, team_ids;
       team_ids = get_teams_ids($rootScope.USER.user_teams);
       console.log("Team ids");
@@ -45,5 +45,9 @@ angular.module('subzapp_mobile').controller('MyTeamsController', [
       $rootScope.USER = null;
       return $state.go('login');
     });
+    return $scope.select_team = function(id) {
+      window.localStorage.setItem('team_id', id);
+      return $state.go('team');
+    };
   }
 ]);
