@@ -2,13 +2,25 @@
 'use strict';
 angular.module('subzapp_mobile').controller('MyTeamsController', [
   '$scope', '$state', '$http', '$window', 'message', 'user', 'RESOURCES', 'stripe', '$rootScope', '$ionicLoading', function($scope, $state, $http, $window, message, user, RESOURCES, stripe, $rootScope, $ionicLoading) {
-    var user_token;
+    var get_teams_ids, user_token;
     console.log('MyTeams Controller');
-    $scope.card = {};
+    get_teams_ids = function(teams) {
+      var i, len, team, teams_array;
+      teams_array = [];
+      for (i = 0, len = teams.length; i < len; i++) {
+        team = teams[i];
+        console.log('team');
+        console.log(team);
+        teams_array.push(team.id);
+      }
+      return teams_array;
+    };
     user_token = window.localStorage.getItem('user_token');
     return user.get_user().then((function(res) {
-      var USER;
-      console.log(res);
+      var USER, team_ids;
+      team_ids = get_teams_ids($rootScope.USER.user_teams);
+      console.log("Team ids");
+      console.log(team_ids);
       USER = $rootScope.USER;
       return $http({
         method: 'GET',
@@ -17,15 +29,16 @@ angular.module('subzapp_mobile').controller('MyTeamsController', [
           'Authorization': "JWT " + user_token,
           "Content-Type": "application/json"
         },
-        data: {
-          user_id: $rootScope.USER.id
+        params: {
+          teams: team_ids
         }
-      }).then((function(res) {
-        console.log("Get user teams");
-        return console.log(res);
-      }), function(errResponse) {
-        console.log("Get user teams error");
-        return console.log(errResponse);
+      }).success(function(teams) {
+        console.log("Fetched orgs teams ");
+        console.log(teams);
+        return $scope.teams = teams;
+      }).error(function(err) {
+        console.log("Get orgs error " + (JSON.stringify(err)));
+        return $state.go('login');
       });
     }), function(errResponse) {
       console.log("User get error " + (JSON.stringify(errResponse)));

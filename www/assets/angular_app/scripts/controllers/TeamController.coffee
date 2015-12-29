@@ -86,6 +86,7 @@ angular.module('subzapp_mobile').controller('TeamController', [
 
     $scope.pay_up = (id, price) ->
       console.log "Pay up"
+      $ionicLoading.show template: 'Joining event'
       $http(
         method: 'POST'
         url: "#{ RESOURCES.DOMAIN }/join-event"
@@ -96,11 +97,13 @@ angular.module('subzapp_mobile').controller('TeamController', [
           user_id: user.id         
       ).then ( ( res ) ->
         console.log "Pay up response"
-        console.log res
+        console.log res.data.user.user_events
         $scope.users_event_ids = get_user_events_array( res.data.user.user_events )
         $rootScope.USER = res.data.user
+        $ionicLoading.hide()
         message.success res.data.message
       ), ( errResponse ) ->
+        $ionicLoading.hide()
         console.log "Pay up error"
         console.log errResponse
         message.error errResponse.data

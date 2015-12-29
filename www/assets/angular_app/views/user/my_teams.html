@@ -10,12 +10,7 @@
       <p ng-hide="is_member">
         Join this team?
 
-      </p> -->
-      
-     
-
-      
-      
+      </p> -->      
     </div>
 
     <div class="container-fluid">
@@ -23,10 +18,10 @@
         <input type="search" ng-model="q" placeholder="filter teams..." aria-label="filter friends" class="black_text" />
         <br>
         <li class="animate-repeat clearfix org_list" ng-repeat="team in teams | filter:q as results">
-          <a href="" >[{{$index + 1}}] {{ team.name }}
+          <a href="" >[{{$index + 1}}] {{ team.main_org.name }}-- {{ team.name }}
           </a><br>          
         </li>
-        <li class="animate-repeat" ng-if="orgs.length == 0">
+        <li class="animate-repeat" ng-if="teams.length == 0">
           <strong>No results found...</strong>
         </li>
       </ul>

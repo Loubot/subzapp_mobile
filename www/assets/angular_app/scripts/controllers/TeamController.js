@@ -80,6 +80,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
     };
     return $scope.pay_up = function(id, price) {
       console.log("Pay up");
+      $ionicLoading.show({
+        template: 'Joining event'
+      });
       return $http({
         method: 'POST',
         url: RESOURCES.DOMAIN + "/join-event",
@@ -94,11 +97,13 @@ angular.module('subzapp_mobile').controller('TeamController', [
         }
       }).then((function(res) {
         console.log("Pay up response");
-        console.log(res);
+        console.log(res.data.user.user_events);
         $scope.users_event_ids = get_user_events_array(res.data.user.user_events);
         $rootScope.USER = res.data.user;
+        $ionicLoading.hide();
         return message.success(res.data.message);
       }), function(errResponse) {
+        $ionicLoading.hide();
         console.log("Pay up error");
         console.log(errResponse);
         return message.error(errResponse.data);
