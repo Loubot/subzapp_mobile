@@ -12,6 +12,7 @@ angular.module('subzapp_mobile').controller('OrgController', [
 
   ($scope, $state, $http, $window, $location, message, user, RESOURCES ) ->
     user_token = window.localStorage.getItem 'user_token'
+    org_id = window.localStorage.getItem 'org_id'
     console.log "Org Controller"
 
     user.get_user().then ( (res) ->
@@ -32,7 +33,7 @@ angular.module('subzapp_mobile').controller('OrgController', [
       url: "#{ RESOURCES.DOMAIN }/get-single-org"
       headers: { 'Authorization': "JWT #{ user_token }", "Content-Type": "application/json" }
       params: 
-        org_id: $location.search().id
+        org_id: org_id
     ).success( (org) ->
       console.log "Fetched org data "
       console.log org
@@ -44,4 +45,7 @@ angular.module('subzapp_mobile').controller('OrgController', [
       $state.go 'login'
 
 
+    $scope.select_team = ( id ) ->
+      window.localStorage.setItem 'team_id', id
+      $state.go 'team'
 ])

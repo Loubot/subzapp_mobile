@@ -3,11 +3,15 @@
 var check_if_member, check_if_member_after_create;
 
 angular.module('subzapp_mobile').controller('TeamController', [
-  '$scope', '$state', '$http', '$window', '$location', 'message', 'user', 'RESOURCES', '$rootScope', function($scope, $state, $http, $window, $location, message, user, RESOURCES, $rootScope) {
-    var get_user_events_array, user_token;
+  '$scope', '$state', '$http', '$window', '$location', 'message', 'user', 'RESOURCES', '$ionicLoading', '$rootScope', function($scope, $state, $http, $window, $location, message, user, RESOURCES, $ionicLoading, $rootScope) {
+    var get_user_events_array, team_id, user_token;
+    team_id = window.localStorage.getItem('team_id');
     get_user_events_array = function(events) {
       var ev, events_array, fn, i, len;
       events_array = [];
+      if (!(events != null)) {
+        return [];
+      }
       fn = function(ev) {
         return events_array.push(ev.id);
       };
@@ -20,10 +24,11 @@ angular.module('subzapp_mobile').controller('TeamController', [
     console.log("Team Controller");
     user_token = window.localStorage.getItem('user_token');
     user.get_user().then((function(res) {
+      $scope.users_event_ids = null;
+      console.log($rootScope.USER);
       user = $rootScope.USER;
-      console.log(user.user_events);
-      $scope.users_event_ids = get_user_events_array(user.user_events);
-      $scope.is_member = check_if_member(user, $location.search().id);
+      $scope.users_event_ids = get_user_events_array($rootScope.USER.user_events);
+      $scope.is_member = check_if_member(user, team_id);
       return $scope.user = user;
     }), function(err) {
       return $state.go('login');
@@ -36,9 +41,11 @@ angular.module('subzapp_mobile').controller('TeamController', [
         "Content-Type": "application/json"
       },
       params: {
-        team_id: $location.search().id
+        team_id: team_id
       }
     }).then((function(res) {
+      console.log('team');
+      console.log(res.data);
       $scope.team = res.data;
       return $scope.events = res.data.events;
     }), function(errResponse) {
@@ -46,6 +53,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
     });
     $scope.join_team = function(id) {
       console.log("User " + user.id);
+      $ionicLoading.show({
+        template: 'Joining team...'
+      });
       return $http({
         method: 'POST',
         url: RESOURCES.DOMAIN + "/join-team",
@@ -55,13 +65,14 @@ angular.module('subzapp_mobile').controller('TeamController', [
         },
         data: {
           user_id: user.id,
-          team_id: $location.search().id
+          team_id: team_id
         }
       }).then((function(res) {
-        console.log("Join team response " + (JSON.stringify(res)));
-        return $scope.is_member = check_if_member_after_create(res.data.team_members, user.id);
+        $scope.is_member = check_if_member_after_create(res.data.team_members, user.id);
+        return $ionicLoading.hide();
       }), function(errResponse) {
-        return console.log("Join team error " + (JSON.stringify(errResponse)));
+        console.log("Join team error " + (JSON.stringify(errResponse)));
+        return $ionicLoading.hide();
       });
     };
     $scope.edit_user = function() {
@@ -69,6 +80,9 @@ angular.module('subzapp_mobile').controller('TeamController', [
     };
     return $scope.pay_up = function(id, price) {
       console.log("Pay up");
+      $ionicLoading.show({
+        template: 'Joining event'
+      });
       return $http({
         method: 'POST',
         url: RESOURCES.DOMAIN + "/join-event",
@@ -83,11 +97,13 @@ angular.module('subzapp_mobile').controller('TeamController', [
         }
       }).then((function(res) {
         console.log("Pay up response");
-        console.log(res);
+        console.log(res.data.user.user_events);
         $scope.users_event_ids = get_user_events_array(res.data.user.user_events);
         $rootScope.USER = res.data.user;
+        $ionicLoading.hide();
         return message.success(res.data.message);
       }), function(errResponse) {
+        $ionicLoading.hide();
         console.log("Pay up error");
         console.log(errResponse);
         return message.error(errResponse.data);
@@ -110,7 +126,6 @@ check_if_member = function(user, team_id) {
     }
     return results;
   })();
-  console.log("Team result " + (typeof team));
   return team.length;
 };
 
@@ -127,6 +142,5 @@ check_if_member_after_create = function(team_mems, user_id) {
     }
     return results;
   })();
-  console.log("team " + (JSON.stringify(users)));
   return users.length;
 };

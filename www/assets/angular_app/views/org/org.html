@@ -7,7 +7,7 @@
       <input type="search" ng-model="q" placeholder="filter clubs..." aria-label="filter friends" class="black_text" />
       <br>Teams in {{ org.name }}
       <li class="animate-repeat org_list" ng-repeat="team in teams | filter:q as results">
-        <a href="/#/team?id={{ team.id }}" >[{{$index + 1}}] {{team.name}}.</a><br>
+        <a href="" ng-click="select_team(team.id)" >[{{$index + 1}}] {{team.name}}.</a><br>
              
       </li>
       <li class="animate-repeat" ng-if="orgs.length == 0">

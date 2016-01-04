@@ -38,5 +38,7 @@ angular.module('subzapp_mobile').controller('AllOrgController', [
         console.log "Get all org error "
         console.log errResponse
 
-
+    $scope.select_org = ( id ) ->
+      window.localStorage.setItem 'org_id', id
+      $state.go 'org'
 ])

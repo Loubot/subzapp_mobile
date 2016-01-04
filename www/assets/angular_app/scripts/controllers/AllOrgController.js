@@ -8,7 +8,7 @@ angular.module('subzapp_mobile').controller('AllOrgController', [
     user.get_user().then((function(res) {
       return $scope.name = $rootScope.USER.name;
     }));
-    return $http({
+    $http({
       method: 'GET',
       url: RESOURCES.DOMAIN + "/all-org",
       headers: {
@@ -22,5 +22,9 @@ angular.module('subzapp_mobile').controller('AllOrgController', [
       console.log("Get all org error ");
       return console.log(errResponse);
     });
+    return $scope.select_org = function(id) {
+      window.localStorage.setItem('org_id', id);
+      return $state.go('org');
+    };
   }
 ]);

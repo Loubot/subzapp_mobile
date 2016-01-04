@@ -2,14 +2,15 @@
 'use strict';
 angular.module('subzapp_mobile').controller('OrgController', [
   '$scope', '$state', '$http', '$window', '$location', 'message', 'user', 'RESOURCES', function($scope, $state, $http, $window, $location, message, user, RESOURCES) {
-    var user_token;
+    var org_id, user_token;
     user_token = window.localStorage.getItem('user_token');
+    org_id = window.localStorage.getItem('org_id');
     console.log("Org Controller");
     user.get_user().then((function(res) {}), function(err) {
       window.USER = null;
       return $state.go('login');
     });
-    return $http({
+    $http({
       method: 'GET',
       url: RESOURCES.DOMAIN + "/get-single-org",
       headers: {
@@ -17,7 +18,7 @@ angular.module('subzapp_mobile').controller('OrgController', [
         "Content-Type": "application/json"
       },
       params: {
-        org_id: $location.search().id
+        org_id: org_id
       }
     }).success(function(org) {
       console.log("Fetched org data ");
@@ -28,5 +29,9 @@ angular.module('subzapp_mobile').controller('OrgController', [
       console.log("single org error " + (JSON.stringify(err)));
       return $state.go('login');
     });
+    return $scope.select_team = function(id) {
+      window.localStorage.setItem('team_id', id);
+      return $state.go('team');
+    };
   }
 ]);

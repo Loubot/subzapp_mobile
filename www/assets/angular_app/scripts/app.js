@@ -40,6 +40,12 @@ angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvi
     templateUrl: 'assets/angular_app/views/user/edit_user.html',
     controller: "EditUserController"
   });
+  $stateProvider.state("my-teams", {
+    cache: false,
+    url: "/my-teams",
+    templateUrl: 'assets/angular_app/views/user/my_teams.html',
+    controller: "MyTeamsController"
+  });
   $stateProvider.state("stripe-form", {
     url: "/stripe-form",
     templateUrl: 'assets/angular_app/views/user/stripe_form.html',
@@ -51,7 +57,8 @@ angular.module('subzapp_mobile').config(function($stateProvider, $urlRouterProvi
   });
   $stateProvider.state("all_org", {
     url: "/all-org",
-    templateUrl: 'assets/angular_app/views/org/all-org.html'
+    templateUrl: 'assets/angular_app/views/org/all-org.html',
+    controller: "AllOrgController"
   });
   $stateProvider.state("team", {
     url: "/team",
